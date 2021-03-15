@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <SplitPane dividerPositions="0.6013894919669995" layoutX="-1.0" prefHeight="671.0" prefWidth="923.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ListView layoutX="14.0" layoutY="73.0" prefHeight="583.0" prefWidth="519.0" />
+                  <Button layoutX="14.0" layoutY="23.0" mnemonicParsing="false" text="Back to Album View" />
+                  <Button layoutX="459.0" layoutY="23.0" mnemonicParsing="false" text="Add Photo" />
+                  <TextField alignment="CENTER" editable="false" layoutX="160.0" layoutY="23.0" prefHeight="26.0" prefWidth="281.0" text="**ALBUM NAME**" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ImageView fitHeight="200.0" fitWidth="266.0" layoutX="46.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button layoutX="256.0" layoutY="27.0" mnemonicParsing="false" text="Delete Photo" />
+                  <Button layoutX="22.0" layoutY="14.0" mnemonicParsing="false" text="Move Photo" />
+                  <TextField layoutX="92.0" layoutY="343.0" prefHeight="26.0" prefWidth="223.0" />
+                  <TextField editable="false" layoutX="92.0" layoutY="395.0" prefHeight="26.0" prefWidth="223.0" />
+                  <TextField layoutX="92.0" layoutY="447.0" prefHeight="26.0" prefWidth="223.0" />
+                  <Label layoutX="36.0" layoutY="343.0" prefHeight="26.0" prefWidth="51.0" text="Caption:" />
+                  <Label layoutX="7.0" layoutY="399.0" text="Date Captured:" />
+                  <Label layoutX="48.0" layoutY="451.0" text="Tags:" />
+                  <TextField editable="false" layoutX="121.0" layoutY="26.0" prefHeight="26.0" prefWidth="122.0" text="Selected Photo Info:" />
+                  <Button layoutX="22.0" layoutY="46.0" mnemonicParsing="false" text="Copy Photo" />
+                  <Button layoutX="95.0" layoutY="486.0" mnemonicParsing="false" text="Add Tags" />
+                  <Button layoutX="233.0" layoutY="486.0" mnemonicParsing="false" text="Delete Tags" />
+                  <Button layoutX="22.0" layoutY="603.0" mnemonicParsing="false" text="&lt;&lt;" />
+                  <Button layoutX="299.0" layoutY="603.0" mnemonicParsing="false" text="&gt;&gt;" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
