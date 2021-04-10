@@ -38,4 +38,9 @@ public class LoginController {
 	public void start(Stage mainStage) throws IOException{
 		
 	}
+	
+	public void login(ActionEvent e) throws IOException {
+		
+	}
+	
 }

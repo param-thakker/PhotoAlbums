@@ -15,12 +15,10 @@ public class Photos extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader();   
-		loader.setLocation(
-				getClass().getResource("/view/Login.fxml"));
+		loader.setLocation(getClass().getResource("/view/Login.fxml"));
 		AnchorPane root = (AnchorPane)loader.load();
 
-		LoginController loginControl = 
-				loader.getController();
+		LoginController loginControl = loader.getController();
 		loginControl.start(primaryStage);
 
 		Scene scene = new Scene(root, 600, 400);
