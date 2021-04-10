@@ -25,7 +25,7 @@ public class Photos extends Application {
 
 		Scene scene = new Scene(root, 600, 400);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Photo Library");
+		primaryStage.setTitle("User Login");
 		primaryStage.show(); 
 		
 	}
