@@ -10,7 +10,7 @@ public class Album implements Serializable {
 	
 	public Album(String name) {
 		this.albumName=name;
-		photos=new ArrayList<>();
+		this.photos=new ArrayList<>();
 	}
 	public String getAlbumName() {
 		return this.albumName;

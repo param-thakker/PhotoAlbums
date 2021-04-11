@@ -9,12 +9,14 @@ public class Photo implements Serializable {
 	public String photoCaption;
 	public Calendar photoDate;
 	public List<Tag> photoTags;
-	private File pics;
+  //	private File pics;
 
 	
 	public Photo(String caption, Calendar date) {
 		this.photoCaption=caption;
 		this.photoDate=date;
+		this.photoTags=new ArrayList<>();
+		
 	}
 	public Calendar getPhotoDate() {
 		return this.photoDate;
