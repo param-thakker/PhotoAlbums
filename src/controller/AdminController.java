@@ -34,4 +34,12 @@ public class AdminController {
 	public void start(Stage mainStage) throws IOException{
 		
 	}
+	
+	public void addUser(ActionEvent e) throws IOException{
+		
+	}
+	public void delUser(ActionEvent e) throws IOException{
+		
+	}
+	
 }
