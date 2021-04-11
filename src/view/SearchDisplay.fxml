@@ -7,10 +7,10 @@
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserController">
    <children>
-      <ListView layoutX="34.0" layoutY="90.0" prefHeight="550.0" prefWidth="850.0" />
+      <ListView fx:id="searchResults" layoutX="34.0" layoutY="90.0" prefHeight="550.0" prefWidth="850.0" />
       <TextField editable="false" layoutX="322.0" layoutY="39.0" prefHeight="26.0" prefWidth="273.0" text="Search Results" />
-      <Button layoutX="857.0" layoutY="14.0" mnemonicParsing="false" text="Logout" />
-      <Button layoutX="42.0" layoutY="52.0" mnemonicParsing="false" text="Create Album from Search" />
-      <Button layoutX="42.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="156.0" text="Back to Albums" />
+      <Button fx:id="sLogout" layoutX="857.0" layoutY="14.0" mnemonicParsing="false" text="Logout" />
+      <Button fx:id="sCreateAlbum" layoutX="42.0" layoutY="52.0" mnemonicParsing="false" text="Create Album from Search" />
+      <Button fx:id="sBacktoAlbums" layoutX="42.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="156.0" text="Back to Albums" />
    </children>
 </AnchorPane>

@@ -7,13 +7,13 @@
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserController">
    <children>
-      <ListView layoutX="34.0" layoutY="90.0" prefHeight="550.0" prefWidth="850.0" />
+      <ListView fx:id="albumList" layoutX="34.0" layoutY="90.0" prefHeight="550.0" prefWidth="850.0" />
       <TextField editable="false" layoutX="322.0" layoutY="39.0" prefHeight="26.0" prefWidth="273.0" text="Welcome **USER**, Please Select an Album:" />
-      <Button layoutX="857.0" layoutY="14.0" mnemonicParsing="false" text="Logout" />
-      <Button layoutX="34.0" layoutY="14.0" mnemonicParsing="false" text="Create Album" />
-      <Button layoutX="34.0" layoutY="53.0" mnemonicParsing="false" text="Rename Album" />
-      <Button layoutX="184.0" layoutY="14.0" mnemonicParsing="false" text="Delete Album" />
-      <Button layoutX="184.0" layoutY="53.0" mnemonicParsing="false" text="Open Album" />
-      <Button layoutX="685.0" layoutY="40.0" mnemonicParsing="false" text="Search for Photos" />
+      <Button fx:id="logout" layoutX="857.0" layoutY="14.0" mnemonicParsing="false" text="Logout" />
+      <Button fx:id="newAlbum" layoutX="34.0" layoutY="14.0" mnemonicParsing="false" text="Create Album" />
+      <Button fx:id="renameAlbum" layoutX="34.0" layoutY="53.0" mnemonicParsing="false" text="Rename Album" />
+      <Button fx:id="delAlbum" layoutX="184.0" layoutY="14.0" mnemonicParsing="false" text="Delete Album" />
+      <Button fx:id="openAlbum" layoutX="184.0" layoutY="53.0" mnemonicParsing="false" text="Open Album" />
+      <Button fx:id="search" layoutX="685.0" layoutY="40.0" mnemonicParsing="false" text="Search for Photos" onAction="#search"/>
    </children>
 </AnchorPane>
