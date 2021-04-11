@@ -41,5 +41,8 @@ public class AdminController {
 	public void delUser(ActionEvent e) throws IOException{
 		System.out.println("delUser pushed!");
 	}
+	public void logout(ActionEvent e) throws IOException{
+		System.out.println("logout pushed!");
+	}
 	
 }

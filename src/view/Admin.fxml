@@ -8,9 +8,10 @@
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="403.0" prefWidth="343.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminController">
    <children>
-      <TextField alignment="CENTER" editable="false" layoutX="91.0" layoutY="14.0" text="WELCOME **ADMIN**" />
-      <Button fx:id="addUser" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Add User" onAction="#addUser"/>
-      <Button fx:id="delUser" layoutX="253.0" layoutY="14.0" mnemonicParsing="false" text="Delete User" onAction="#delUser"/>
+      <TextField alignment="CENTER" editable="false" layoutX="97.0" layoutY="40.0" text="WELCOME **ADMIN**" />
+      <Button fx:id="addUser" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" text="Add User" onAction="#addUser" />
+      <Button fx:id="delUser" layoutX="251.0" layoutY="40.0" mnemonicParsing="false" text="Delete User" onAction="#delUser" />
       <ListView fx:id="userList" layoutX="34.0" layoutY="79.0" prefHeight="287.0" prefWidth="274.0" />
+      <Button fx:id="aLogout" layoutX="274.0" layoutY="1.0" mnemonicParsing="false" text="Logout" onAction="#logout"/>
    </children>
 </AnchorPane>
