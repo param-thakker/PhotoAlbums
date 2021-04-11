@@ -102,4 +102,40 @@ public class UserController {
     public void openAlbum(ActionEvent e) throws IOException{
     	
     }
+    public void mcConfirm(ActionEvent e) throws IOException{
+    	
+    }
+    public void mcCancel(ActionEvent e) throws IOException{
+    	
+    }
+    public void backToAlbum(ActionEvent e) throws IOException{
+    	
+    }
+    public void addPhoto(ActionEvent e) throws IOException{
+    	
+    }
+    public void delPhoto(ActionEvent e) throws IOException{
+    	
+    }
+    public void movePhoto(ActionEvent e) throws IOException{
+    	
+    }
+    public void copyPhoto(ActionEvent e) throws IOException{
+	
+    }
+    public void addTag(ActionEvent e) throws IOException{
+    	
+    }
+    public void delTag(ActionEvent e) throws IOException{
+    	
+    }
+    public void nextPhoto(ActionEvent e) throws IOException{
+    	
+    }
+    public void prevPhoto(ActionEvent e) throws IOException{
+    	
+    }
+    public void sCreateAlbum(ActionEvent e) throws IOException{
+    	
+    }
 }

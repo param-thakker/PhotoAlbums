@@ -10,7 +10,7 @@
    <children>
       <ListView fx:id="mcAlbumList" layoutX="52.0" layoutY="77.0" prefHeight="274.0" prefWidth="491.0" />
       <TextField editable="false" layoutX="210.0" layoutY="27.0" prefHeight="26.0" prefWidth="189.0" text="Select Album to Move/Copy To:" />
-      <Button fx:id="mcConfirm" layoutX="52.0" layoutY="28.0" mnemonicParsing="false" text="Confirm Selection" />
-      <Button fx:id="mcCancel" layoutX="423.0" layoutY="28.0" mnemonicParsing="false" text="Cancel Move/Copy " />
+      <Button fx:id="mcConfirm" layoutX="52.0" layoutY="28.0" mnemonicParsing="false" text="Confirm Selection" onAction="#mcConfirm"/>
+      <Button fx:id="mcCancel" layoutX="423.0" layoutY="28.0" mnemonicParsing="false" text="Cancel Move/Copy " onAction="#mcCancel"/>
    </children>
 </AnchorPane>
