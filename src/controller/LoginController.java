@@ -46,9 +46,18 @@ public class LoginController {
 	public void start(Stage mainStage) throws IOException{
 	  users.put("admin", new User("admin"));
 	  users.put("stock", new User("stock"));
+	  
+	  login.setOnAction(e -> {
+		  try {
+			  login();
+			  mainStage.hide();
+		  }catch (IOException e1) {
+			  System.out.println("bruh");
+		  }
+	  });
 	}
 	
-	public void login(ActionEvent e) throws IOException {
+	public void login() throws IOException {
 		String username=usernameTextField.getText();
 		if(username.trim().length()==0 || username==null ){
 			

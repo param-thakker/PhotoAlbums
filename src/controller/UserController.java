@@ -20,8 +20,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import model.Photo;
 
 public class UserController {
 	@FXML
@@ -79,6 +81,8 @@ public class UserController {
 	@FXML
 	ListView searchResults;
 	
+	private ObservableList<String> obsList; 
+	List<Photo> photoLister = new ArrayList<Photo>();
 	
 	public void start(Stage mainStage) throws IOException{
 		
@@ -111,8 +115,11 @@ public class UserController {
     public void backToAlbum(ActionEvent e) throws IOException{
     	System.out.println("Back to Album pushed!");
     }
-    public void addPhoto(ActionEvent e) throws IOException{
+    public void addPhoto(ActionEvent e, Stage mainStage) throws IOException{
     	System.out.println("Add Photo pushed!");
+    	
+    
+    	
     }
     public void delPhoto(ActionEvent e) throws IOException{
     	System.out.println("Delete Photo pushed!");
