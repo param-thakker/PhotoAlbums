@@ -85,57 +85,57 @@ public class UserController {
 	}
 	
 	public void search(ActionEvent e) throws IOException{
-		
+		System.out.println("search pushed!");
 	}
     public void logout(ActionEvent e) throws IOException{
-		
+    	System.out.println("logout pushed!");
 	}
     public void newAlbum(ActionEvent e) throws IOException{
-		
+    	System.out.println("New Album pushed!");
 	}
     public void renameAlbum(ActionEvent e) throws IOException{
-		
+    	System.out.println("Rename Album pushed!");
 	}
     public void delAlbum(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Delete Album pushed!");
     }
     public void openAlbum(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Open Album pushed!");
     }
     public void mcConfirm(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Move/Copy Confirm pushed!");
     }
     public void mcCancel(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Move/Copy Cancel pushed!");
     }
     public void backToAlbum(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Back to Album pushed!");
     }
     public void addPhoto(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Add Photo pushed!");
     }
     public void delPhoto(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Delete Photo pushed!");
     }
     public void movePhoto(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Move Photo pushed!");
     }
     public void copyPhoto(ActionEvent e) throws IOException{
-	
+    	System.out.println("Copy Photo pushed!");
     }
     public void addTag(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Add Tag pushed!");
     }
     public void delTag(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Delete Tag pushed!");
     }
     public void nextPhoto(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Next Photo pushed!");
     }
     public void prevPhoto(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Previous Photo pushed!");
     }
     public void sCreateAlbum(ActionEvent e) throws IOException{
-    	
+    	System.out.println("Create Album by Search Results pushed!");
     }
 }

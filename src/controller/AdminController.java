@@ -36,10 +36,10 @@ public class AdminController {
 	}
 	
 	public void addUser(ActionEvent e) throws IOException{
-		
+		System.out.println("addUser pushed!");
 	}
 	public void delUser(ActionEvent e) throws IOException{
-		
+		System.out.println("delUser pushed!");
 	}
 	
 }
