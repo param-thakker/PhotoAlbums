@@ -17,14 +17,8 @@ public class Photos extends Application {
 		FXMLLoader loader = new FXMLLoader();   
 		loader.setLocation(getClass().getResource("/view/Login.fxml"));
 		AnchorPane root = (AnchorPane)loader.load();
-		
-		//AdminController admin = loader.getController();
-		//admin.start(primaryStage);
 		LoginController loginControl = loader.getController();
 		loginControl.start(primaryStage);
-		//UserController user = loader.getController();
-		//user.start(primaryStage);
-
 		Scene scene = new Scene(root, 600, 400); //resize as needed
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("User Login");
