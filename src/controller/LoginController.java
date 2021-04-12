@@ -38,11 +38,9 @@ public class LoginController {
 	Button login;
 	
 	
-	HashMap<String,User> users = new HashMap<>();
+	static HashMap<String,User> users = new HashMap<>();
 	
 
-
-	
 	public void start(Stage mainStage) throws IOException{
 	  users.put("admin", new User("admin"));
 	  users.put("stock", new User("stock"));
@@ -52,14 +50,14 @@ public class LoginController {
 			  login();
 			  mainStage.hide();
 		  }catch (IOException e1) {
-			  System.out.println("bruh");
+			 // System.out.println("bruh");
 		  }
 	  });
 	}
 	
 	public void login() throws IOException {
 		String username=usernameTextField.getText();
-		if(username.trim().length()==0 || username==null ){
+		if(username.trim().length()==0 || username==null ) {
 			
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setHeaderText("Error");
