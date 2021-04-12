@@ -7,7 +7,7 @@
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserController">
    <children>
-      <ListView fx:id="albumListView" layoutX="34.0" layoutY="90.0" prefHeight="550.0" prefWidth="850.0" />
+      <ListView fx:id="albumListView" layoutX="34.0" layoutY="90.0" prefHeight="550.0" prefWidth="400.0" />
       <TextField editable="false" layoutX="322.0" layoutY="25.0" prefHeight="26.0" prefWidth="273.0" text="Welcome **USER**, Please Select an Album:" />
       <TextField fx:id="albumField" layoutX="340.0" layoutY="60.0" prefHeight="21.0" prefWidth="173.0" promptText= "Enter Album name" visible="false" />
       <Button fx:id="confirmAdd" layoutX="525.0" layoutY="60.0" mnemonicParsing="false" text="Confirm" onAction="#confirm" visible="false"/>

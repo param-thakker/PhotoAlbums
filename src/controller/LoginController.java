@@ -87,21 +87,21 @@ public class LoginController {
 			loader.setLocation(getClass().getResource("/view/AlbumDisplay.fxml"));
 			AnchorPane root = (AnchorPane)loader.load();
 			UserController userController = loader.getController();
-			userController.start(stage);
+			userController.start(stage,user);
 			Scene scene = new Scene(root,923,671);
 			stage.setScene(scene);
 			root.getScene().getWindow().hide();//currently doesnt work properly
 			stage.show();	
 		}
 		else if (users.containsKey(username)) {
-			User user=users.get(username);
+			   User user=users.get(username);
 		
 				Stage stage = new Stage();
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(getClass().getResource("/view/AlbumDisplay.fxml"));
 				AnchorPane root = (AnchorPane)loader.load();
 				UserController userController = loader.getController();
-				userController.start(stage);
+				userController.start(stage, user);
 				Scene scene = new Scene(root,923,671);
 				stage.setScene(scene);
 				root.getScene().getWindow().hide(); //currently doesnt work properly

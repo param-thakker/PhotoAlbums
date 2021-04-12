@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import model.Album;
 import model.Photo;
+import model.User;
 
 public class UserController {
 	@FXML
@@ -77,7 +78,7 @@ public class UserController {
 	@FXML
 	TextField Tags;
 	@FXML
-	ListView albumListView;
+	ListView<Album> albumListView;
 	@FXML
 	ListView mcAlbumList;
 	@FXML
@@ -88,14 +89,20 @@ public class UserController {
 	TextField albumField;
 	@FXML
 	Button confirmAdd;
+	User currentUser;
 	
-	
-	private ObservableList<String> obsList; 
+	private ObservableList<Album> obsList; 
 	List<Album> AlbumList = new ArrayList<Album>();
 	List<String> albumStringList = new ArrayList<String>();
 	List<Photo> photoLister = new ArrayList<Photo>();
 	
-	public void start(Stage mainStage) throws IOException{
+	public void start(Stage mainStage, User user) throws IOException{
+	
+		albumField.setDisable(true);
+		confirmAdd.setDisable(true);
+		this.currentUser=user;
+		displayList();
+		
 		logout.setOnAction(e-> {
 			try {
 				  logout();
@@ -103,10 +110,16 @@ public class UserController {
 			}catch (IOException e1) {
 			}
 		});
-		albumField.setDisable(true);
-		confirmAdd.setDisable(true);
-
-	}
+		openAlbum.setOnAction(e-> {
+			try {
+				  if (!openAlbum().equals("error")){
+				  mainStage.hide();
+				  }
+			}catch (IOException e1) {
+			}
+		});
+		
+		}
 	
 	public void search(ActionEvent e) throws IOException{
 		System.out.println("search pushed!");
@@ -133,19 +146,20 @@ public class UserController {
     public void renameAlbum(ActionEvent e) throws IOException{
     	System.out.println("Rename Album pushed!");
 	}
-    public void delAlbum(ActionEvent e) throws IOException{
+    public void delAlbum(ActionEvent e) throws IOException {
     	System.out.println("Delete Album pushed!");
     	if (albumListView.getSelectionModel().getSelectedItem() != null) {
-    		//delete album
-    		String albumToBeRemoved = (String) albumListView.getSelectionModel().getSelectedItem();
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + albumListView.getSelectionModel().getSelectedItem() + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+    		
+    		String albumToBeRemoved = albumListView.getSelectionModel().getSelectedItem().getAlbumName();
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + albumToBeRemoved + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 			alert.showAndWait();
 
 			int currIndex = albumListView.getSelectionModel().getSelectedIndex();
 			if (alert.getResult() == ButtonType.YES) {
+				currentUser.getAlbums().remove(albumListView.getSelectionModel().getSelectedItem());
 				albumListView.getItems().remove(currIndex);
-				AlbumList.remove(currIndex);
-				albumStringList.remove(currIndex);
+				//AlbumList.remove(currIndex);
+				//albumStringList.remove(currIndex);
 			}
     	}else {
     		Alert alert2 = new Alert(AlertType.ERROR);
@@ -153,26 +167,30 @@ public class UserController {
 			alert2.showAndWait();
 		}
     }
-    public void openAlbum(ActionEvent e) throws IOException{
-    	System.out.println("Open Album pushed!");
+    public String openAlbum() throws IOException{
+    	//System.out.println("Open Album pushed!");
     	
     	if (albumListView.getSelectionModel().getSelectedItem() != null) {
     		//open album **CURRENTLY GIVES NULLPOINTER idk how to fix this yet**
-    		/*Stage stage = new Stage();
+    		Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
+    		Stage stage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/PhotoDisplay.fxml"));
 			AnchorPane root = (AnchorPane)loader.load();
-			UserController userController = loader.getController();
-			userController.start(stage);
+			PhotoDisplayController photoController = loader.getController();
+			photoController.start(stage, selectedAlbum,currentUser);
 			Scene scene = new Scene(root,923,671);
 			stage.setScene(scene);
 			root.getScene().getWindow().hide(); //currently doesnt work properly
-			stage.show();	*/ 
+			stage.show();
+			return "";//*/ 
+			
 			
     	}else {
     		Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText("No selected album to open!");
+			alert.setHeaderText("No selected album to open");
 			alert.showAndWait();
+			return "error";
     	}
     }
     public void mcConfirm(ActionEvent e) throws IOException{
@@ -215,14 +233,18 @@ public class UserController {
     	System.out.println("Create Album by Search Results pushed!");
     }
     public void confirm(ActionEvent e) {
-    	AlbumList.add(new Album(albumField.getText()));
-    	albumStringList.add(albumField.getText());
-		obsList = FXCollections.observableArrayList(albumStringList);
-		albumListView.setItems(obsList);
+    	//AlbumList.add(new Album(albumField.getText()));
+    	//albumStringList.add(albumField.getText());
+    	currentUser.getAlbums().add(new Album(albumField.getText()));
+		displayList();
 		
 		albumField.setDisable(true);
 		confirmAdd.setDisable(true);
 		confirmAdd.setVisible(false);
 		albumField.setVisible(false);
     }
+    public void displayList() {
+    	obsList = FXCollections.observableArrayList(currentUser.getAlbums());
+		albumListView.setItems(obsList);
+	}
 }

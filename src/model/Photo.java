@@ -7,12 +7,14 @@ public class Photo implements Serializable {
 	private static final long serialVersionUID = 6955723612371190680L;
 	
 	public String photoCaption;
+	public String photoName;
 	public Calendar photoDate;
 	public List<Tag> photoTags;
   //	private File pics;
 
 	
-	public Photo(String caption, Calendar date) {
+	public Photo(String name,String caption, Calendar date) {
+		this.photoName=name;
 		this.photoCaption=caption;
 		this.photoDate=date;
 		this.photoTags=new ArrayList<>();
@@ -28,5 +30,8 @@ public class Photo implements Serializable {
 		return this.photoCaption;
 	}
 
+	public String getPhotoName(){
+		return this.photoName;
+	}
 
 }
