@@ -80,12 +80,18 @@ public class UserController {
 	ListView photoList;
 	@FXML
 	ListView searchResults;
+	@FXML
+	TextField albumField;
+	@FXML
+	Button confirmAdd;
+	
 	
 	private ObservableList<String> obsList; 
 	List<Photo> photoLister = new ArrayList<Photo>();
 	
 	public void start(Stage mainStage) throws IOException{
-		
+		albumField.setDisable(true);
+		confirmAdd.setDisable(true);
 	}
 	
 	public void search(ActionEvent e) throws IOException{
@@ -95,7 +101,8 @@ public class UserController {
     	System.out.println("logout pushed!");
 	}
     public void newAlbum(ActionEvent e) throws IOException{
-    	System.out.println("New Album pushed!");
+    	albumField.setDisable(false);
+		confirmAdd.setDisable(false);
 	}
     public void renameAlbum(ActionEvent e) throws IOException{
     	System.out.println("Rename Album pushed!");
@@ -144,5 +151,8 @@ public class UserController {
     }
     public void sCreateAlbum(ActionEvent e) throws IOException{
     	System.out.println("Create Album by Search Results pushed!");
+    }
+    public void confirm(ActionEvent e) {
+    	
     }
 }
