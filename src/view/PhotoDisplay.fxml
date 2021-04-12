@@ -37,7 +37,7 @@
                   <Button fx:id="addTag" layoutX="95.0" layoutY="486.0" mnemonicParsing="false" text="Add Tags" onAction="#addTag"/>
                   <Button fx:id="delTag" layoutX="233.0" layoutY="486.0" mnemonicParsing="false" text="Delete Tags" onAction="#delTag"/>
                   <Button fx:id="prevPhoto" layoutX="22.0" layoutY="603.0" mnemonicParsing="false" text="&lt;&lt;" onAction="#prevPhoto"/>
-                  <Button fx:id="nextPhoto" layoutX="299.0" layoutY="603.0" mnemonicParsing="false" text="&gt;&gt;" onAction="#nextPhoto/>
+                  <Button fx:id="nextPhoto" layoutX="299.0" layoutY="603.0" mnemonicParsing="false" text="&gt;&gt;" onAction="#nextPhoto"/>
                </children>
             </AnchorPane>
         </items>
