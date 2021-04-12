@@ -132,6 +132,13 @@ public class UserController {
 	}
     public void renameAlbum(ActionEvent e) throws IOException{
     	System.out.println("Rename Album pushed!");
+    	if (albumListView.getSelectionModel().getSelectedItem() != null) {
+    		
+    	}else {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setHeaderText("No selected album to edit!");
+    		alert.showAndWait();
+    	}
 	}
     public void delAlbum(ActionEvent e) throws IOException{
     	System.out.println("Delete Album pushed!");

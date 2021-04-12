@@ -21,7 +21,9 @@ public class Album implements Serializable {
 	public int getAlbumSize() {
 		return this.photos.size();
 	}
-	
+	public void addPhoto(Photo photo) {
+		photos.add(photo);
+	}
 	
 	
 
