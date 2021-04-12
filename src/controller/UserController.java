@@ -14,10 +14,13 @@ import java.util.Scanner;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
@@ -85,14 +88,30 @@ public class UserController {
 	List<Photo> photoLister = new ArrayList<Photo>();
 	
 	public void start(Stage mainStage) throws IOException{
-		
+		logout.setOnAction(e-> {
+			try {
+				  logout();
+				  mainStage.hide();
+			}catch (IOException e1) {
+			}
+		});
 	}
 	
 	public void search(ActionEvent e) throws IOException{
 		System.out.println("search pushed!");
 	}
-    public void logout(ActionEvent e) throws IOException{
+    public void logout() throws IOException{
     	System.out.println("logout pushed!");
+    	Stage stage = new Stage();
+		FXMLLoader loader = new FXMLLoader();   
+		loader.setLocation(getClass().getResource("/view/Login.fxml"));
+		AnchorPane root = (AnchorPane)loader.load();
+		LoginController loginControl = loader.getController();
+		loginControl.start(stage);
+		Scene scene = new Scene(root, 600, 400);
+		stage.setScene(scene);
+		stage.setTitle("User Login");
+		stage.show(); 
 	}
     public void newAlbum(ActionEvent e) throws IOException{
     	System.out.println("New Album pushed!");
