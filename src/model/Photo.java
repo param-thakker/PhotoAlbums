@@ -18,6 +18,7 @@ public class Photo implements Serializable {
 		this.photoCaption=caption;
 		this.photoDate=date;
 		this.photoTags=new ArrayList<>();
+		this.photoDate.set(Calendar.MILLISECOND, 0);
 		
 	}
 	public Calendar getPhotoDate() {
@@ -33,5 +34,7 @@ public class Photo implements Serializable {
 	public String getPhotoName(){
 		return this.photoName;
 	}
-
+	public void setPhotoCaption(String caption) {
+		this.photoCaption=caption;
+	}
 }
