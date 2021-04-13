@@ -41,7 +41,6 @@ public class PhotoDisplayController {
 	Button addTag;
 	@FXML
 	Button delTag;
-	
 	@FXML
 	Button backToAlbum;
 	@FXML
@@ -53,26 +52,21 @@ public class PhotoDisplayController {
 	@FXML
 	TextField caption;
 	@FXML
-
 	TextField albumHeader;
 	@FXML
 	TextField Tags;
-
+	@FXML
 	TextField tagNameField;
-
 	@FXML
 	TextField tagValueField;
-	
 	@FXML
 	ListView<Tag> tagListView;
 	@FXML
 	Button addCaptionButton;
 	@FXML	
 	Button confirmCaption;
-
 	@FXML
 	ImageView photoView;
-
 	@FXML	
 	Button confirmTag;
 	
@@ -224,6 +218,10 @@ public class PhotoDisplayController {
 				//photoList.getItems().remove(currIndex);
 				list.remove(photoList.getSelectionModel().getSelectedItem());
 				displayList();
+				photoView.setImage(null);
+				caption.clear();
+				dateCapturedField.clear();
+				//clear tag list view after deletion
 			}
     	}else {
     		Alert alert2 = new Alert(AlertType.ERROR);
