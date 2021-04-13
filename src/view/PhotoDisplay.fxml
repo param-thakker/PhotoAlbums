@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoDisplayController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoDisplayController">
    <children>
       <SplitPane dividerPositions="0.4353017802865827" layoutX="-1.0" prefHeight="671.0" prefWidth="923.0">
         <items>
@@ -35,7 +35,7 @@
                   <Button fx:id="prevPhoto" layoutX="20.0" layoutY="629.0" mnemonicParsing="false" onAction="#prevPhoto" text="&lt;&lt;" />
                   <Button fx:id="nextPhoto" layoutX="460.0" layoutY="629.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;&gt;" />
                   <Button fx:id="captionCancel" layoutX="424.0" layoutY="399.0" mnemonicParsing="false" onAction="#captionCancel" text="Cancel" />
-                  <ImageView fx:id="photoView" fitHeight="328.0" fitWidth="464.0" layoutX="17.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="photoView" fitHeight="313.0" fitWidth="464.0" layoutX="17.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" />
                   <Button fx:id="movePhoto" layoutX="22.0" layoutY="14.0" mnemonicParsing="false" onAction="#movePhoto" text="Move Photo" />
                   <ListView fx:id="tagListView" layoutX="113.0" layoutY="478.0" prefHeight="150.0" prefWidth="223.0" />
                   <Label layoutX="79.0" layoutY="482.0" text="Tags:" />
