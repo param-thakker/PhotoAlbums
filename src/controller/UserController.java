@@ -44,51 +44,35 @@ public class UserController {
 	@FXML
 	Button search;
 	@FXML
-	Button mcConfirm;
-	@FXML
-	Button mcCancel;
-	@FXML
-	Button backToAlbum;
-	@FXML
-	Button addPhoto;
-	@FXML
-	Button delPhoto;
-	@FXML
-	Button movePhoto;
-	@FXML
-	Button copyPhoto;
-	@FXML
-	Button addTag;
-	@FXML
-	Button delTag;
-	@FXML
-	Button prevPhoto;
-	@FXML
-	Button nextPhoto;
-	@FXML
 	Button sLogout;
 	@FXML
 	Button sCreateAlbum;
 	@FXML
 	Button sBacktoAlbums;
 	@FXML
-	TextField caption;
+	Button renameConfirm;
 	@FXML
-	TextField dateCaptured;
-	@FXML
-	TextField Tags;
+	Button renameCancel;
 	@FXML
 	ListView<Album> albumListView;
 	@FXML
-	ListView mcAlbumList;
-	@FXML
-	ListView photoList;
-	@FXML
-	ListView searchResults;
+	ListView<Photo> searchResults;
 	@FXML
 	TextField albumField;
 	@FXML
+	TextField welcome;
+	@FXML 
+	TextField albumNameDetail;
+	@FXML
+	TextField albumNumPhotoDetail;
+	@FXML
+	TextField albumDate1Detail;
+	@FXML
+	TextField albumDate2Detail;
+	@FXML
 	Button confirmAdd;
+	@FXML
+	Button newAlbumCancel;
 	User currentUser;
 	
 	private ObservableList<Album> obsList; 
@@ -97,7 +81,7 @@ public class UserController {
 	List<Photo> photoLister = new ArrayList<Photo>();
 	
 	public void start(Stage mainStage, User user) throws IOException{
-	
+		welcome.setText("Welcome " + user.getUsername() + ", Please select an Album: ");
 		albumField.setDisable(true);
 		confirmAdd.setDisable(true);
 		this.currentUser=user;
@@ -119,11 +103,39 @@ public class UserController {
 			}
 		});
 		
+		albumListView
+		.getSelectionModel()
+		.selectedIndexProperty()
+		.addListener(
+				(obs, oldVal, newVal) -> 
+				albumDetail(mainStage));
+		
 		}
 	
 	public void search(ActionEvent e) throws IOException{
 		System.out.println("search pushed!");
 	}
+	private void albumDetail(Stage mainStage) {
+		if (!albumListView.getSelectionModel().isEmpty()) {
+			Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
+			
+			albumNameDetail.setText(selectedAlbum.albumName);
+			albumNumPhotoDetail.setText(Integer.toString(selectedAlbum.photos.size()));
+			albumDate1Detail.setText("");
+			albumDate2Detail.setText("");
+		}
+	}
+	private void albumDetailV2() {
+		if (!albumListView.getSelectionModel().isEmpty()) {
+			Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
+			
+			albumNameDetail.setText(selectedAlbum.albumName);
+			albumNumPhotoDetail.setText(Integer.toString(selectedAlbum.photos.size()));
+			albumDate1Detail.setText("");
+			albumDate2Detail.setText("");
+		}
+	}
+	
     public void logout() throws IOException{
     	System.out.println("logout pushed!");
     	Stage stage = new Stage();
@@ -141,11 +153,32 @@ public class UserController {
     	albumField.setDisable(false);
 		confirmAdd.setDisable(false);
 		confirmAdd.setVisible(true);
+		newAlbumCancel.setDisable(false);
+		newAlbumCancel.setVisible(true);
 		albumField.setVisible(true);
+		renameAlbum.setDisable(true);
+		delAlbum.setDisable(true);
+		openAlbum.setDisable(true);
+		search.setDisable(true);
 	}
     public void renameAlbum(ActionEvent e) throws IOException{
     	System.out.println("Rename Album pushed!");
     	if (albumListView.getSelectionModel().getSelectedItem() != null) {
+    		albumNameDetail.setOpacity(1);
+    		albumNameDetail.setPromptText("Enter new Album name here");
+    		albumNameDetail.setEditable(true);
+    		renameConfirm.setVisible(true);
+    		renameConfirm.setDisable(false);
+    		renameCancel.setVisible(true);
+    		renameCancel.setDisable(false);
+    		albumNumPhotoDetail.setDisable(true);
+    		albumDate1Detail.setDisable(true);
+    		albumDate2Detail.setDisable(true);
+    		
+    		delAlbum.setDisable(true);
+    		openAlbum.setDisable(true);
+    		search.setDisable(true);
+    		newAlbum.setDisable(true);
     		
     	}else {
     		Alert alert = new Alert(AlertType.ERROR);
@@ -153,6 +186,42 @@ public class UserController {
     		alert.showAndWait();
     	}
 	}
+    public void renameConfirm(ActionEvent e) throws IOException{
+    	Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
+    	selectedAlbum.albumName = albumNameDetail.getText();
+    	displayList();
+    	albumDetailV2();
+    	
+		albumNameDetail.setEditable(false);
+		renameConfirm.setVisible(false);
+		renameConfirm.setDisable(true);
+		renameCancel.setVisible(false);
+		renameCancel.setDisable(true);
+		albumNumPhotoDetail.setDisable(false);
+		albumDate1Detail.setDisable(false);
+		albumDate2Detail.setDisable(false);
+		
+		delAlbum.setDisable(false);
+		openAlbum.setDisable(false);
+		search.setDisable(false);
+		newAlbum.setDisable(false);
+    }
+    public void renameCancel(ActionEvent e) {
+    	albumDetailV2();
+    	albumNameDetail.setEditable(false);
+		renameConfirm.setVisible(false);
+		renameConfirm.setDisable(true);
+		renameCancel.setVisible(false);
+		renameCancel.setDisable(true);
+		albumNumPhotoDetail.setDisable(false);
+		albumDate1Detail.setDisable(false);
+		albumDate2Detail.setDisable(false);
+		
+		delAlbum.setDisable(false);
+		openAlbum.setDisable(false);
+		search.setDisable(false);
+		newAlbum.setDisable(false);
+    }
     public void delAlbum(ActionEvent e) throws IOException {
     	System.out.println("Delete Album pushed!");
     	if (albumListView.getSelectionModel().getSelectedItem() != null) {
@@ -200,42 +269,7 @@ public class UserController {
 			return "error";
     	}
     }
-    public void mcConfirm(ActionEvent e) throws IOException{
-    	System.out.println("Move/Copy Confirm pushed!");
-    }
-    public void mcCancel(ActionEvent e) throws IOException{
-    	System.out.println("Move/Copy Cancel pushed!");
-    }
-    public void backToAlbum(ActionEvent e) throws IOException{
-    	System.out.println("Back to Album pushed!");
-    }
-    public void addPhoto(ActionEvent e) throws IOException{
-    	System.out.println("Add Photo pushed!");
-    	
     
-    	
-    }
-    public void delPhoto(ActionEvent e) throws IOException{
-    	System.out.println("Delete Photo pushed!");
-    }
-    public void movePhoto(ActionEvent e) throws IOException{
-    	System.out.println("Move Photo pushed!");
-    }
-    public void copyPhoto(ActionEvent e) throws IOException{
-    	System.out.println("Copy Photo pushed!");
-    }
-    public void addTag(ActionEvent e) throws IOException{
-    	System.out.println("Add Tag pushed!");
-    }
-    public void delTag(ActionEvent e) throws IOException{
-    	System.out.println("Delete Tag pushed!");
-    }
-    public void nextPhoto(ActionEvent e) throws IOException{
-    	System.out.println("Next Photo pushed!");
-    }
-    public void prevPhoto(ActionEvent e) throws IOException{
-    	System.out.println("Previous Photo pushed!");
-    }
     public void sCreateAlbum(ActionEvent e) throws IOException{
     	System.out.println("Create Album by Search Results pushed!");
     }
@@ -245,10 +279,30 @@ public class UserController {
     	currentUser.getAlbums().add(new Album(albumField.getText()));
 		displayList();
 		
+		albumField.clear();
 		albumField.setDisable(true);
 		confirmAdd.setDisable(true);
 		confirmAdd.setVisible(false);
+		newAlbumCancel.setDisable(true);
+		newAlbumCancel.setVisible(false);
 		albumField.setVisible(false);
+		renameAlbum.setDisable(false);
+		delAlbum.setDisable(false);
+		openAlbum.setDisable(false);
+		search.setDisable(false);
+    }
+    public void albumCancel(ActionEvent e) {
+    	albumField.clear();
+    	albumField.setDisable(true);
+		confirmAdd.setDisable(true);
+		confirmAdd.setVisible(false);
+		newAlbumCancel.setDisable(true);
+		newAlbumCancel.setVisible(false);
+		albumField.setVisible(false);
+		renameAlbum.setDisable(false);
+		delAlbum.setDisable(false);
+		openAlbum.setDisable(false);
+		search.setDisable(false);
     }
     public void displayList() {
     	obsList = FXCollections.observableArrayList(currentUser.getAlbums());

@@ -20,6 +20,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -38,22 +39,28 @@ public class PhotoDisplayController {
 	@FXML
 	Button backToAlbum;
 	@FXML
-	ListView<Photo> photoList;
+	Button captionCancel;
 	@FXML
-	TextField captionField;
+	ListView<Photo> photoList;
 	@FXML
 	TextField dateCapturedField;
 	@FXML
 	TextField caption;
+	@FXML
+	TextField albumHeader;
 	@FXML
 	TextField Tags;
 	@FXML
 	Button addCaptionButton;
 	@FXML
 	Button confirmCaption;
+	@FXML
+	ImageView photoView;
 	SimpleDateFormat dateTimeformat = new SimpleDateFormat("MM/dd/yyyy '@' hh:mm a");
 
 	List<Photo> list=new ArrayList<>();
+	String lastCaption = "";
+	
 	
 	private ObservableList<Photo> obsList;  
 	
@@ -63,8 +70,10 @@ public class PhotoDisplayController {
 		displayList();
 		this.currentAlbum=album;
 		this.currentUser=user;
-		caption.setVisible(false);
 		confirmCaption.setVisible(false);
+		captionCancel.setVisible(false);
+		albumHeader.setText(album.albumName);
+		
 		
 		backToAlbum.setOnAction(e -> {
 			  try {
@@ -87,9 +96,24 @@ public class PhotoDisplayController {
 		if (!photoList.getSelectionModel().isEmpty()) {
 			addCaptionButton.setVisible(true);
 			Photo photo=photoList.getSelectionModel().getSelectedItem();
-			String caption=photo.getPhotoCaption();
+			Image p = new Image(photo.source);
+			photoView.setImage(p);
+			String cap=photo.getPhotoCaption();
 			Calendar date=photo.getPhotoDate();
-			captionField.setText(caption);
+			caption.setText(cap);
+			dateCapturedField.setText(dateTimeformat.format(date.getTime()));
+			
+		}
+	}
+	private void photoDetailV2() {
+		if (!photoList.getSelectionModel().isEmpty()) {
+			addCaptionButton.setVisible(true);
+			Photo photo=photoList.getSelectionModel().getSelectedItem();
+			Image p = new Image(photo.source);
+			photoView.setImage(p);
+			String cap=photo.getPhotoCaption();
+			Calendar date=photo.getPhotoDate();
+			caption.setText(cap);
 			dateCapturedField.setText(dateTimeformat.format(date.getTime()));
 			
 		}
@@ -124,7 +148,7 @@ public class PhotoDisplayController {
 			photoDate.setTimeInMillis(chosenPicture.lastModified());
 			
 			//photoDate.set(Calendar.MILLISECOND,0);
-			Photo photoToBeAdded = new Photo(name,"", photoDate);
+			Photo photoToBeAdded = new Photo(name,"", photoDate, chosenPicture.toURI().toString());
 			if (currentAlbum.getPhotos()==null || currentAlbum.getPhotos().size()==0) {
 				list.add(photoToBeAdded);
 				currentAlbum.getPhotos().add(photoToBeAdded);
@@ -190,10 +214,18 @@ public class PhotoDisplayController {
 		
 	}
 	public void prevPhoto(ActionEvent e) {
-		
+		System.out.println("yuh");
+		if (!photoList.getSelectionModel().isEmpty() && photoList.getSelectionModel().getSelectedIndex() != 0) {
+			photoList.getSelectionModel().select(photoList.getSelectionModel().getSelectedIndex()-1);
+			photoDetailV2();
+		}
 	}
 	public void nextPhoto(ActionEvent e) {
-		
+		System.out.println("thank u next");
+		if (!photoList.getSelectionModel().isEmpty() /*&& not greater than size of available list*/ ) {
+			photoList.getSelectionModel().select(photoList.getSelectionModel().getSelectedIndex()+1);
+			photoDetailV2();
+		}
 	}
 	public void addCaption(ActionEvent e) {
 		if (photoList.getSelectionModel().getSelectedItem()==null) {
@@ -202,8 +234,10 @@ public class PhotoDisplayController {
 			alert.showAndWait();
 		}
 		else {
-		caption.setVisible(true);
-		confirmCaption.setVisible(true);
+			lastCaption = caption.getText();
+			caption.setEditable(true);
+			confirmCaption.setVisible(true);
+			captionCancel.setVisible(true);
 		}
 	}
 	public void confirm(ActionEvent e) {
@@ -216,7 +250,7 @@ public class PhotoDisplayController {
 			//String newUser=userField.getText();
 				
 			
-				Alert alert = new Alert(AlertType.CONFIRMATION, "Add " + caption.getText() + " as caption for this picture?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+				Alert alert = new Alert(AlertType.CONFIRMATION, "Set " + caption.getText() + " as caption for this picture?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 			//	alert.setTitle("Add new user");
 				alert.showAndWait();
 				if (alert.getResult() == ButtonType.YES) {
@@ -225,14 +259,20 @@ public class PhotoDisplayController {
 					selectedPhoto.setPhotoCaption(caption.getText());
 					
 					displayList();
-					caption.setVisible(false);
+					caption.setEditable(false);
 					confirmCaption.setVisible(false);
-					
+					captionCancel.setVisible(false);
 				
 				}
 	
 			
 		}
+	}
+	public void captionCancel(ActionEvent e) {
+		caption.setEditable(false);
+		confirmCaption.setVisible(false);
+		captionCancel.setVisible(false);
+		caption.setText(lastCaption);
 	}
 	public void displayList() {
 		/*for (Photo photo:list) {

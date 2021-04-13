@@ -10,16 +10,17 @@ public class Photo implements Serializable {
 	public String photoName;
 	public Calendar photoDate;
 	public List<Tag> photoTags;
+	public String source;
   //	private File pics;
 
 	
-	public Photo(String name,String caption, Calendar date) {
+	public Photo(String name,String caption, Calendar date, String source) {
 		this.photoName=name;
 		this.photoCaption=caption;
 		this.photoDate=date;
 		this.photoTags=new ArrayList<>();
 		this.photoDate.set(Calendar.MILLISECOND, 0);
-		
+		this.source = source;
 	}
 	public Calendar getPhotoDate() {
 		return this.photoDate;

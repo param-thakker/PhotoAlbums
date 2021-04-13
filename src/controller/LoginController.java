@@ -48,6 +48,7 @@ public class LoginController {
 	  login.setOnAction(e -> {
 		  try {
 			  login();
+			  //hide mainStage only if successful login
 			  mainStage.hide();
 		  }catch (IOException e1) {
 			 // System.out.println("bruh");
@@ -77,7 +78,7 @@ public class LoginController {
 				stage.setScene(scene);
 				root.getScene().getWindow().hide(); //currently doesnt work properly
 				stage.show();	
-		
+				System.out.println("ADMIN");
 		}
 		else if(username.trim().equals("stock")) { //load stock photos but otherwise identical to reg login
 			User user=users.get(username);
@@ -85,13 +86,14 @@ public class LoginController {
 			Stage stage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/AlbumDisplay.fxml"));
-			AnchorPane root = (AnchorPane)loader.load();
+			AnchorPane root = (AnchorPane) loader.load();
 			UserController userController = loader.getController();
 			userController.start(stage,user);
 			Scene scene = new Scene(root,923,671);
 			stage.setScene(scene);
 			root.getScene().getWindow().hide();//currently doesnt work properly
 			stage.show();	
+			
 		}
 		else if (users.containsKey(username)) {
 			   User user=users.get(username);
@@ -99,7 +101,7 @@ public class LoginController {
 				Stage stage = new Stage();
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(getClass().getResource("/view/AlbumDisplay.fxml"));
-				AnchorPane root = (AnchorPane)loader.load();
+				AnchorPane root = (AnchorPane) loader.load();
 				UserController userController = loader.getController();
 				userController.start(stage, user);
 				Scene scene = new Scene(root,923,671);
