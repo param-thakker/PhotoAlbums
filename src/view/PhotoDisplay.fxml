@@ -31,15 +31,18 @@
                   <Button fx:id="movePhoto" layoutX="22.0" layoutY="14.0" mnemonicParsing="false" text="Move Photo" onAction="#movePhoto" />
                   <TextField fx:id="captionField" editable="false" layoutX="92.0" layoutY="180.0" prefHeight="26.0" prefWidth="223.0" />
                   <TextField fx:id="dateCapturedField" editable="false" layoutX="92.0" layoutY="236.0" prefHeight="26.0" prefWidth="223.0" />
-                  <TextField fx:id="Tags" editable="false" layoutX="92.0" layoutY="290.0" prefHeight="26.0" prefWidth="223.0" />
+                  <ListView fx:id="tagListView" layoutX="92.0" layoutY="290.0" prefHeight="150.0" prefWidth="223.0" />
                   <Label layoutX="36.0" layoutY="180.0" prefHeight="26.0" prefWidth="51.0" text="Caption:" />
                   <Label layoutX="7.0" layoutY="236.0" text="Date Captured:" />
                   <Label layoutX="48.0" layoutY="290.0" text="Tags:" />
                   <TextField editable="false" layoutX="121.0" layoutY="26.0" prefHeight="26.0" prefWidth="128.0" text="Selected Photo Info:" />
                   <Button fx:id="copyPhoto" layoutX="22.0" layoutY="46.0" mnemonicParsing="false" text="Copy Photo" onAction="#copyPhoto"/>
-                  <Button fx:id="addTag" layoutX="95.0" layoutY="486.0" mnemonicParsing="false" text="Add Tags" onAction="#addTag"/>
-                  <Button fx:id="delTag" layoutX="233.0" layoutY="486.0" mnemonicParsing="false" text="Delete Tags" onAction="#delTag"/>
+                  <Button fx:id="addTag" layoutX="95.0" layoutY="450.0" mnemonicParsing="false" text="Add Tags" onAction="#addTag"/>
+                  <Button fx:id="delTag" layoutX="233.0" layoutY="450.0" mnemonicParsing="false" text="Delete Tags" onAction="#delTag"/>
+                  <TextField fx:id="tagNameField" editable="true" layoutX="60.0" layoutY="515.0" prefHeight="26.0" prefWidth="125.0" promptText="Add Tag Name" />
+                  <TextField fx:id="tagValueField" editable="true" layoutX="200.0" layoutY="515.0" prefHeight="26.0" prefWidth="125.0" promptText="Add Tag Value" />
                   <Button fx:id="prevPhoto" layoutX="22.0" layoutY="603.0" mnemonicParsing="false" text="&lt;&lt;" onAction="#prevPhoto"/>
+                  <Button fx:id="confirmTag" layoutX="145.0" layoutY="550.0" mnemonicParsing="false" text="Confirm" onAction="#confirmAddTag"/>
                   <Button fx:id="nextPhoto" layoutX="299.0" layoutY="603.0" mnemonicParsing="false" text="&gt;&gt;" onAction="#nextPhoto"/>
                </children>
             </AnchorPane>
