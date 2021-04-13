@@ -18,12 +18,12 @@
       <Button fx:id="openAlbum" layoutX="184.0" layoutY="53.0" mnemonicParsing="false" onAction="#openAlbum" text="Open Album" />
       <Button fx:id="search" layoutX="774.0" layoutY="53.0" mnemonicParsing="false" onAction="#search" text="Search for Photos" />
       <TextField fx:id="albumNameDetail" editable="false" layoutX="706.0" layoutY="109.0" prefHeight="26.0" prefWidth="135.0" />
-      <Label layoutX="625.0" layoutY="113.0" text="Album Name:" />
-      <Label layoutX="591.0" layoutY="149.0" text="Number of Photos:" />
+      <Label layoutX="628.0" layoutY="113.0" text="Album Name:" />
+      <Label layoutX="602.0" layoutY="149.0" text="Number of Photos:" />
       <TextField fx:id="albumNumPhotoDetail" editable="false" layoutX="706.0" layoutY="144.0" prefHeight="26.0" prefWidth="135.0" />
-      <Label layoutX="608.0" layoutY="189.0" text="Earliest Date:" />
+      <Label layoutX="628.0" layoutY="189.0" text="Earliest Date:" />
       <TextField fx:id="albumDate1Detail" editable="false" layoutX="706.0" layoutY="184.0" prefHeight="26.0" prefWidth="135.0" />
-      <Label layoutX="611.0" layoutY="221.0" text="Latest Date:" />
+      <Label layoutX="628.0" layoutY="221.0" text="Latest Date:" />
       <TextField fx:id="albumDate2Detail" editable="false" layoutX="706.0" layoutY="217.0" prefHeight="26.0" prefWidth="135.0" />
       <Button fx:id="renameConfirm" disable="true" layoutX="849.0" layoutY="110.0" mnemonicParsing="false" onAction="#renameConfirm" text="Confirm" visible="false" />
       <Button fx:id="renameCancel" disable="true" layoutX="570.0" layoutY="110.0" mnemonicParsing="false" onAction="#renameCancel" text="Cancel" visible="false" />

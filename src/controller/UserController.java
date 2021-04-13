@@ -2,8 +2,10 @@ package controller;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -74,6 +76,7 @@ public class UserController {
 	@FXML
 	Button newAlbumCancel;
 	User currentUser;
+	SimpleDateFormat dateTimeformat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	private ObservableList<Album> obsList; 
 	List<Album> AlbumList = new ArrayList<Album>();
@@ -121,8 +124,28 @@ public class UserController {
 			
 			albumNameDetail.setText(selectedAlbum.albumName);
 			albumNumPhotoDetail.setText(Integer.toString(selectedAlbum.photos.size()));
-			albumDate1Detail.setText("");
-			albumDate2Detail.setText("");
+			
+			
+			String earliestDate="";
+			String latestDate="";
+			if (selectedAlbum.getPhotos().size()!=0) {
+				Calendar date=selectedAlbum.getPhotos().get(0).getPhotoDate();
+				 earliestDate=dateTimeformat.format(date.getTime());
+				 latestDate=dateTimeformat.format(date.getTime());
+			}
+			for (Photo photo:selectedAlbum.getPhotos()) {
+				Calendar date=photo.getPhotoDate();
+		
+				if (dateTimeformat.format(date.getTime()).compareTo(earliestDate)<0) {
+					earliestDate=dateTimeformat.format(date.getTime());
+				}
+				if (dateTimeformat.format(date.getTime()).compareTo(latestDate)>0) {
+					 latestDate=dateTimeformat.format(date.getTime());
+				}
+				
+			}
+			albumDate1Detail.setText(earliestDate);
+			albumDate2Detail.setText(latestDate);
 		}
 	}
 	private void albumDetailV2() {
@@ -131,8 +154,26 @@ public class UserController {
 			
 			albumNameDetail.setText(selectedAlbum.albumName);
 			albumNumPhotoDetail.setText(Integer.toString(selectedAlbum.photos.size()));
-			albumDate1Detail.setText("");
-			albumDate2Detail.setText("");
+			String earliestDate="";
+			String latestDate="";
+			if (selectedAlbum.getPhotos().size()!=0) {
+				Calendar date=selectedAlbum.getPhotos().get(0).getPhotoDate();
+				 earliestDate=dateTimeformat.format(date.getTime());
+				 latestDate=dateTimeformat.format(date.getTime());
+			}
+			for (Photo photo:selectedAlbum.getPhotos()) {
+				Calendar date=photo.getPhotoDate();
+		
+				if (dateTimeformat.format(date.getTime()).compareTo(earliestDate)<0) {
+					earliestDate=dateTimeformat.format(date.getTime());
+				}
+				if (dateTimeformat.format(date.getTime()).compareTo(latestDate)>0) {
+					 latestDate=dateTimeformat.format(date.getTime());
+				}
+				
+			}
+			albumDate1Detail.setText(earliestDate);
+			albumDate2Detail.setText(latestDate);
 		}
 	}
 	
