@@ -29,12 +29,12 @@
                   <TextField fx:id="caption" editable="true" layoutX="15.0" layoutY="140.0" prefHeight="26.0" prefWidth="225.0" promptText="Add caption for this picture" />
                   <Button fx:id="confirmCaption" layoutX="270.0" layoutY="140.0" mnemonicParsing="false" text="Confirm" onAction="#confirm" />
                   <Button fx:id="movePhoto" layoutX="22.0" layoutY="14.0" mnemonicParsing="false" text="Move Photo" onAction="#movePhoto" />
-                  <TextField fx:id="captionField" editable="false" layoutX="92.0" layoutY="343.0" prefHeight="26.0" prefWidth="223.0" />
-                  <TextField fx:id="dateCapturedField" editable="false" layoutX="92.0" layoutY="399.0" prefHeight="26.0" prefWidth="223.0" />
-                  <TextField fx:id="Tags" editable="false" layoutX="92.0" layoutY="451.0" prefHeight="26.0" prefWidth="223.0" />
-                  <Label layoutX="36.0" layoutY="343.0" prefHeight="26.0" prefWidth="51.0" text="Caption:" />
-                  <Label layoutX="7.0" layoutY="399.0" text="Date Captured:" />
-                  <Label layoutX="48.0" layoutY="451.0" text="Tags:" />
+                  <TextField fx:id="captionField" editable="false" layoutX="92.0" layoutY="180.0" prefHeight="26.0" prefWidth="223.0" />
+                  <TextField fx:id="dateCapturedField" editable="false" layoutX="92.0" layoutY="236.0" prefHeight="26.0" prefWidth="223.0" />
+                  <TextField fx:id="Tags" editable="false" layoutX="92.0" layoutY="290.0" prefHeight="26.0" prefWidth="223.0" />
+                  <Label layoutX="36.0" layoutY="180.0" prefHeight="26.0" prefWidth="51.0" text="Caption:" />
+                  <Label layoutX="7.0" layoutY="236.0" text="Date Captured:" />
+                  <Label layoutX="48.0" layoutY="290.0" text="Tags:" />
                   <TextField editable="false" layoutX="121.0" layoutY="26.0" prefHeight="26.0" prefWidth="128.0" text="Selected Photo Info:" />
                   <Button fx:id="copyPhoto" layoutX="22.0" layoutY="46.0" mnemonicParsing="false" text="Copy Photo" onAction="#copyPhoto"/>
                   <Button fx:id="addTag" layoutX="95.0" layoutY="486.0" mnemonicParsing="false" text="Add Tags" onAction="#addTag"/>
