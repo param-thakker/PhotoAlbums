@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.Album;
 import model.Photo;
+import model.Tag;
 import model.User;
 import java.text.*;
 
@@ -35,6 +36,11 @@ public class PhotoDisplayController {
 	private Album currentAlbum;
 	private User currentUser;
 	
+	
+	@FXML
+	Button addTag;
+	@FXML
+	Button delTag;
 	
 	@FXML
 	Button backToAlbum;
@@ -47,15 +53,30 @@ public class PhotoDisplayController {
 	@FXML
 	TextField caption;
 	@FXML
+
 	TextField albumHeader;
 	@FXML
 	TextField Tags;
+
+	TextField tagNameField;
+
+	@FXML
+	TextField tagValueField;
+	
+	@FXML
+	ListView<Tag> tagListView;
 	@FXML
 	Button addCaptionButton;
-	@FXML
+	@FXML	
 	Button confirmCaption;
+
 	@FXML
 	ImageView photoView;
+
+	@FXML	
+	Button confirmTag;
+	
+
 	SimpleDateFormat dateTimeformat = new SimpleDateFormat("MM/dd/yyyy '@' hh:mm a");
 
 	List<Photo> list=new ArrayList<>();
@@ -63,6 +84,7 @@ public class PhotoDisplayController {
 	
 	
 	private ObservableList<Photo> obsList;  
+
 	
 
 	public void start(Stage mainStage,Album album, User user) throws IOException{
@@ -71,9 +93,15 @@ public class PhotoDisplayController {
 		this.currentAlbum=album;
 		this.currentUser=user;
 		confirmCaption.setVisible(false);
+
 		captionCancel.setVisible(false);
 		albumHeader.setText(album.albumName);
 		
+
+		tagNameField.setVisible(false);
+		tagValueField.setVisible(false);
+		confirmTag.setVisible(false);
+
 		
 		backToAlbum.setOnAction(e -> {
 			  try {
@@ -90,6 +118,7 @@ public class PhotoDisplayController {
 				(obs, oldVal, newVal) -> 
 				photoDetail(mainStage));
 	
+		
 		
 	}
 	private void photoDetail(Stage mainStage) { 
@@ -114,8 +143,11 @@ public class PhotoDisplayController {
 			String cap=photo.getPhotoCaption();
 			Calendar date=photo.getPhotoDate();
 			caption.setText(cap);
+
+			List<Tag> tags=photo.getPhotoTags();
+			caption.setText(cap);
 			dateCapturedField.setText(dateTimeformat.format(date.getTime()));
-			
+			tagListView.setItems(FXCollections.observableArrayList(photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
 		}
 	}
 	public void backToAlbum() throws IOException {
@@ -192,8 +224,6 @@ public class PhotoDisplayController {
 				//photoList.getItems().remove(currIndex);
 				list.remove(photoList.getSelectionModel().getSelectedItem());
 				displayList();
-				//AlbumList.remove(currIndex);
-				//albumStringList.remove(currIndex);
 			}
     	}else {
     		Alert alert2 = new Alert(AlertType.ERROR);
@@ -208,10 +238,27 @@ public class PhotoDisplayController {
 		
 	}
 	public void addTag(ActionEvent e) {
-		
+		tagNameField.setVisible(true);
+		tagValueField.setVisible(true);
+		confirmTag.setVisible(true);
 	}
 	public void delTag(ActionEvent e) {
-		
+		if (tagListView.getSelectionModel().getSelectedItem() != null) {
+			Photo photoToBeRemoved = photoList.getSelectionModel().getSelectedItem();
+    		Tag tagToBeRemoved = tagListView.getSelectionModel().getSelectedItem();
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + tagToBeRemoved + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+			alert.showAndWait();
+
+			int currIndex = tagListView.getSelectionModel().getSelectedIndex();
+			if (alert.getResult() == ButtonType.YES) {
+				photoToBeRemoved.getPhotoTags().remove(tagToBeRemoved);
+				tagListView.setItems(FXCollections.observableArrayList(photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
+			}
+    	} else {
+    		Alert alert2 = new Alert(AlertType.ERROR);
+			alert2.setHeaderText("No selected tag name-value to delete!");
+			alert2.showAndWait();
+		}
 	}
 	public void prevPhoto(ActionEvent e) {
 		System.out.println("yuh");
@@ -225,6 +272,36 @@ public class PhotoDisplayController {
 		if (!photoList.getSelectionModel().isEmpty() /*&& not greater than size of available list*/ ) {
 			photoList.getSelectionModel().select(photoList.getSelectionModel().getSelectedIndex()+1);
 			photoDetailV2();
+		}
+	}
+	public void confirmAddTag(ActionEvent e) {
+		if ((tagNameField.getText().trim().length()==0 || tagNameField.getText()==null) ) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText("Tag name can't be empty! Please enter legitimate values");
+			alert.showAndWait();
+		}
+		else {
+	
+				Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to add this tag name-value pair?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+				alert.showAndWait();
+				if (alert.getResult() == ButtonType.YES) {
+					Photo selectedPhoto=photoList.getSelectionModel().getSelectedItem();
+					Tag tag=new Tag(tagNameField.getText(),tagValueField.getText());
+					selectedPhoto.getPhotoTags().add(tag);
+					//obsList = FXCollections.observableArrayList(list); 
+
+					//photoList.setItems(obsList); 
+					tagListView.setItems(FXCollections.observableArrayList(photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
+					tagNameField.clear();
+					tagValueField.clear();
+					
+					tagNameField.setVisible(false);
+					tagValueField.setVisible(false);
+					confirmTag.setVisible(false);
+				
+				}
+	
+			
 		}
 	}
 	public void addCaption(ActionEvent e) {
@@ -247,14 +324,17 @@ public class PhotoDisplayController {
 			alert.showAndWait();
 		}
 		else {
+
 			//String newUser=userField.getText();
 				
 			
 				Alert alert = new Alert(AlertType.CONFIRMATION, "Set " + caption.getText() + " as caption for this picture?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 			//	alert.setTitle("Add new user");
+
+	
 				alert.showAndWait();
 				if (alert.getResult() == ButtonType.YES) {
-					//LoginController.users.put(newUser, new User(newUser));
+		
 					Photo selectedPhoto=photoList.getSelectionModel().getSelectedItem();
 					selectedPhoto.setPhotoCaption(caption.getText());
 					
@@ -275,11 +355,7 @@ public class PhotoDisplayController {
 		caption.setText(lastCaption);
 	}
 	public void displayList() {
-		/*for (Photo photo:list) {
-			if (!list.contains(photo)) {
-			list.add(photo);
-			}
-		}*/
+		
 		obsList = FXCollections.observableArrayList(list); 
 
 		photoList.setItems(obsList); 
