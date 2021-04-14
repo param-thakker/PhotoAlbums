@@ -161,10 +161,8 @@ public class PhotoDisplayController {
 	public void addPhoto(ActionEvent e) {
 		FileChooser photoPicker = new FileChooser();
 		photoPicker.setTitle("Please select an image to import");
-		photoPicker.getExtensionFilters().addAll(
-				new ExtensionFilter("Image Files", "*.bmp", "*.BMP", "*.gif", "*.GIF", "*.jpg", "*.JPG", "*.png",
-						"*.PNG"));
-				
+		photoPicker.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.bmp", "*.BMP", "*.gif", "*.GIF", "*.jpg", "*.JPG", "*.png", "*.PNG"));
+		System.out.println("I am here");		
 		File chosenPicture = photoPicker.showOpenDialog(null);
 		
 		if (chosenPicture != null) {
@@ -182,14 +180,14 @@ public class PhotoDisplayController {
 			}
 			else {
 				for (Photo currentPhoto : currentAlbum.getPhotos()) {
-					if (currentPhoto.equals(photoToBeAdded)) {
+					if (currentPhoto.source.equals(photoToBeAdded.source)) {
 						Alert alert = new Alert(AlertType.ERROR);
 						alert.setTitle("Error in Adding New Photo");
 						//alert.setHeaderText("Photo Add Error.");
 						alert.setContentText("This photo already exists in the album");
 	
 						alert.showAndWait();
-						//return;
+						return;
 					}
 				}
 				list.add(photoToBeAdded);
@@ -222,7 +220,7 @@ public class PhotoDisplayController {
 				photoView.setImage(null);
 				caption.clear();
 				dateCapturedField.clear();
-				//clear tag list view after deletion
+				tagListView.setItems(null);
 			}
     	}else {
     		Alert alert2 = new Alert(AlertType.ERROR);
@@ -260,14 +258,14 @@ public class PhotoDisplayController {
 		}
 	}
 	public void prevPhoto(ActionEvent e) {
-		System.out.println("yuh");
+		//System.out.println("yuh");
 		if (!photoList.getSelectionModel().isEmpty() && photoList.getSelectionModel().getSelectedIndex() != 0) {
 			photoList.getSelectionModel().select(photoList.getSelectionModel().getSelectedIndex()-1);
 			photoDetailV2();
 		}
 	}
 	public void nextPhoto(ActionEvent e) {
-		System.out.println("thank u next");
+		//System.out.println("thank u next");
 		if (!photoList.getSelectionModel().isEmpty() /*&& not greater than size of available list*/ ) {
 			photoList.getSelectionModel().select(photoList.getSelectionModel().getSelectedIndex()+1);
 			photoDetailV2();

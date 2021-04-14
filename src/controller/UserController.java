@@ -317,6 +317,20 @@ public class UserController {
     public void confirm(ActionEvent e) {
     	//AlbumList.add(new Album(albumField.getText()));
     	//albumStringList.add(albumField.getText());
+    	if ((albumField.getText().trim().length()==0 || albumField.getText()==null) ) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText("Album name can't be empty! Please enter legitimate values");
+			alert.showAndWait();
+			return;
+    	}
+    	for (Album al : currentUser.getAlbums()) {
+    		if (al.getAlbumName().equals(albumField.getText())) {
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setHeaderText("Duplicate Album name!");
+    			alert.showAndWait();
+    			return;
+    		}
+    	}
     	currentUser.getAlbums().add(new Album(albumField.getText()));
 		displayList();
 		
