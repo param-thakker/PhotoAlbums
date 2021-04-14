@@ -71,12 +71,6 @@ public class UserController {
 	 */
 	@FXML
 	Button search;
-	@FXML
-	Button sLogout;
-	@FXML
-	Button sCreateAlbum;
-	@FXML
-	Button sBacktoAlbums;
 	/**
 	 * The FXML Button to confirm the renaming of an Album
 	 */
