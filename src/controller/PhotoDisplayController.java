@@ -83,9 +83,9 @@ public class PhotoDisplayController {
 
 	public void start(Stage mainStage,Album album, User user) throws IOException{
 		
-		displayList();
 		this.currentAlbum=album;
 		this.currentUser=user;
+		displayList();
 		confirmCaption.setVisible(false);
 
 		captionCancel.setVisible(false);
@@ -125,7 +125,8 @@ public class PhotoDisplayController {
 			Calendar date=photo.getPhotoDate();
 			caption.setText(cap);
 			dateCapturedField.setText(dateTimeformat.format(date.getTime()));
-			
+			List<Tag> tags=photo.getPhotoTags();
+			tagListView.setItems(FXCollections.observableArrayList(photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
 		}
 	}
 	private void photoDetailV2() {
@@ -177,24 +178,24 @@ public class PhotoDisplayController {
 			Photo photoToBeAdded = new Photo(name,"", photoDate, chosenPicture.toURI().toString());
 			if (currentAlbum.getPhotos()==null || currentAlbum.getPhotos().size()==0) {
 				list.add(photoToBeAdded);
-				currentAlbum.getPhotos().add(photoToBeAdded);
+				currentAlbum.addPhoto(photoToBeAdded);
 			}
 			else {
-			for (Photo currentPhoto : currentAlbum.getPhotos()) {
-				if (currentPhoto.equals(photoToBeAdded)) {
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Error in Adding New Photo");
-					//alert.setHeaderText("Photo Add Error.");
-					alert.setContentText("This photo already exists in the album");
-
-					alert.showAndWait();
-					//return;
+				for (Photo currentPhoto : currentAlbum.getPhotos()) {
+					if (currentPhoto.equals(photoToBeAdded)) {
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.setTitle("Error in Adding New Photo");
+						//alert.setHeaderText("Photo Add Error.");
+						alert.setContentText("This photo already exists in the album");
+	
+						alert.showAndWait();
+						//return;
+					}
 				}
+				list.add(photoToBeAdded);
+				currentAlbum.addPhoto(photoToBeAdded);
 			}
-			list.add(photoToBeAdded);
-			currentAlbum.getPhotos().add(photoToBeAdded);
-			}
-			
+				
 			displayList();			
 			//photos.getItems().add(photoToBeAdded);
 			//selectedAlbum.getPhotos().add(photoToBeAdded);
@@ -354,7 +355,7 @@ public class PhotoDisplayController {
 	}
 	public void displayList() {
 		
-		obsList = FXCollections.observableArrayList(list); 
+		obsList = FXCollections.observableArrayList(currentAlbum.getPhotos()); 
 
 		photoList.setItems(obsList); 
 	}
