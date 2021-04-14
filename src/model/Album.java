@@ -8,7 +8,10 @@ import java.util.*;
  *
  */
 public class Album implements Serializable {
-
+	
+	/**
+	 * The serial ID of the class
+	 */
 	private static final long serialVersionUID = -4143935150417416554L;
 	/**
 	 * the name of the Album

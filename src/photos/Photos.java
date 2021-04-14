@@ -13,12 +13,12 @@ import javafx.stage.Stage;
  *
  */
 public class Photos extends Application {
-
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
 	/**
-	 * 
+	 * main start method for the Photos Application
 	 */
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader();   

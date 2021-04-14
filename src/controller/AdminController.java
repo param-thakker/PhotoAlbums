@@ -198,7 +198,9 @@ public class AdminController {
 		stage.setTitle("User Login");
 		stage.show(); 
 	}
-
+	/**
+	 * Auto saves the current Admin data for future opening
+	 */
 	private void autoSave() {
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream("data/data.dat");

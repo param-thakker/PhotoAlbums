@@ -535,6 +535,10 @@ public class UserController {
 		albumListView.setItems(obsList);
 		
 	}
+    /**
+	 * Auto saves the current user data for future opening
+	 * @param users the Users to save data to
+	 */
 	public static void autoSave(List<User> users) {
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream("data/data.dat");

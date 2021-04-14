@@ -51,6 +51,9 @@ public class PhotoDisplayController {
 	 * The User that is currently logged in
 	 */
 	private User currentUser;
+	/**
+	 * The List of Users
+	 */
 	private List<User> users;
 	
 	/**
@@ -140,10 +143,13 @@ public class PhotoDisplayController {
 	 */
 	@FXML	
 	Button confirmTag;
+	/**
+	 * The FXML Button to cancel an attempted Tag add
+	 */
 	@FXML	
 	Button cancelTag;
 	
-
+	
 	SimpleDateFormat dateTimeformat = new SimpleDateFormat("MM/dd/yyyy '@' hh:mm a");
 
 	List<Photo> list=new ArrayList<>();
@@ -584,16 +590,17 @@ public class PhotoDisplayController {
 	}
 
 	/**
-	 * Displays the thumbnails of all the images in the album in the top bar, as well as their respective captions
+	 * Cancels the addition of a new Tag by enabling respective buttons
 	 */
-
 	public void tagCancel(ActionEvent e) {
 		tagNameField.setVisible(false);
 		tagValueField.setVisible(false);
 		confirmTag.setVisible(false);
 		cancelTag.setVisible(false);
 	}
-
+	/**
+	 * Displays the current Album's Photos and their captions
+	 */
 	public void displayList() {
 		obsList = FXCollections.observableArrayList(this.list); 
 
@@ -618,6 +625,10 @@ public class PhotoDisplayController {
 		});
 		
 	}
+	/**
+	 * Auto saves the current user data for future opening
+	 * @param users the Users to save data to
+	 */
 	public static void autoSave(List<User> users) {
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream("data/data.dat");

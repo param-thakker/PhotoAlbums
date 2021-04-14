@@ -8,7 +8,9 @@ import java.util.*;
  *
  */
 public class Photo implements Serializable {
-
+	/**
+	 * The serial ID for this class
+	 */
 	private static final long serialVersionUID = 6955723612371190680L;
 	/**
 	 * the caption of the Photo
@@ -83,9 +85,14 @@ public class Photo implements Serializable {
 	public void setPhotoCaption(String caption) {
 		this.photoCaption=caption;
 	}
+	/**
+	 * gets the filepath for this Photo
+	 * @return String this.source the filepath for this Photo
+	 */
 	public String getPhotoSource(){
 		return this.source;
 	}
+	@Override
 	public String toString() {
 		return this.getPhotoName();
 	}

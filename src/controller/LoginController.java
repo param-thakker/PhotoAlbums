@@ -64,7 +64,7 @@ public class LoginController {
 	/**
 	 * The main start method for LoginController
 	 * @param mainStage the Stage to execute on
-	 * @throws IOException
+	 * @throws IOException IOException
 	 */
 	public void start(Stage mainStage) throws IOException{
 
@@ -81,7 +81,7 @@ public class LoginController {
 	}
 	/**
 	 * Handles an attempted login, checking the usernameTextField with the list of allowed users and redirects the screen accordingly
-	 * @throws IOException
+	 * @throws IOException IOException
 	 */
 	public void login() throws IOException {
 		String username=usernameTextField.getText();
@@ -178,6 +178,10 @@ public class LoginController {
 		
 			
 		}
+	/**
+	 * Auto saves the current user data for future opening
+	 * @param users the Users to save data to
+	 */
 	public static void autoSave(List<User> users) {
 	try {
 		FileOutputStream fileOutputStream = new FileOutputStream("data/data.dat");
@@ -191,7 +195,11 @@ public class LoginController {
 	}
 
 	}
-	
+	/**
+	 * Saves the current Photo details to the stock Album
+	 * @param photoFile the File to save to stock Album
+	 * @param stockAlbum the Album of stock photos
+	 */
 	public static void photoSaveDetails(File photoFile, Album stockAlbum) {
 		String photoName = photoFile.getName();
 		Calendar photoDate = Calendar.getInstance();

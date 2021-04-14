@@ -8,7 +8,9 @@ import java.io.*;
  *
  */
 public class Tag implements Serializable {
-
+	/**
+	 * The serial ID for this class
+	 */
 	private static final long serialVersionUID = 3430529772963736249L;
 	/**
 	 * the name of the Tag

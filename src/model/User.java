@@ -9,7 +9,9 @@ import java.util.*;
  *
  */
 public class User implements Serializable {
-
+	/**
+	 * The serial ID for this class
+	 */
 	private static final long serialVersionUID = -7351729135012380019L;
 	/**
 	 * the username of the User
@@ -37,7 +39,10 @@ public class User implements Serializable {
 	public String toString() {
 		return this.getUsername();
 	}
-
+	/**
+	 * gets the username for this User
+	 * @return String the username for this User
+	 */
 	public String getUsername() {
 		return this.username;
 	}
