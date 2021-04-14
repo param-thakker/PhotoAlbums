@@ -2,21 +2,43 @@ package model;
 
 import java.io.*;
 import java.util.*;
-
+/**
+ * The User class represents a single User who may have multiple photo albums
+ * @author Param Thakker
+ * @author Jonathan Lu
+ *
+ */
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -7351729135012380019L;
+	/**
+	 * the username of the User
+	 */
 	String username;
+	/**
+	 * The List of Albums belonging to the User
+	 */
 	List<Album> userAlbums;
 	
-	
+	/**
+	 * Constructor with 1 argument
+	 * @param user the name of the User
+	 */
 	public User(String user) {
 		this.username=user;
 		this.userAlbums=new ArrayList<>();
 	}
+	/**
+	 * gets the username of the User
+	 * @return the String username of the User
+	 */
 	public String getUsername() {
 		return this.username;
 	}
+	/**
+	 * gets the List of Albums belonging to this User
+	 * @return the List of Albums belonging to this User
+	 */
 	public List<Album> getAlbums(){
 		return this.userAlbums;
 	}

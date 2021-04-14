@@ -31,18 +31,40 @@ import javafx.event.ActionEvent;
 import model.Album;
 import model.Photo;
 import model.User;
-
+/**
+ * The UserController class handles the user control and logic in the AlbumDisplay screen
+ * @author Jonathan Lu
+ * @author Param Thakker
+ */
 public class UserController {
+	/**
+	 * The FXML Button to logout of the application
+	 */
 	@FXML
 	Button logout;
+	/**
+	 * The FXML Button to enable creation of a new Album
+	 */
 	@FXML
 	Button newAlbum;
+	/**
+	 * The FXML Button to enable renaming of an existing Album
+	 */
 	@FXML
 	Button renameAlbum;
+	/**
+	 * The FXML Button to delete an existing Album
+	 */
 	@FXML
 	Button delAlbum;
+	/**
+	 * The FXML Button to open an existing Album
+	 */
 	@FXML
 	Button openAlbum;
+	/**
+	 * The FXML Button to search for Photos that meet certain criteria
+	 */
 	@FXML
 	Button search;
 	@FXML
@@ -51,38 +73,85 @@ public class UserController {
 	Button sCreateAlbum;
 	@FXML
 	Button sBacktoAlbums;
+	/**
+	 * The FXML Button to confirm the renaming of an Album
+	 */
 	@FXML
 	Button renameConfirm;
+	/**
+	 * The FXML Button to cancel a renaming of an existing Album
+	 */
 	@FXML
 	Button renameCancel;
+	/**
+	 * The FXML ListView for the list of Albums belonging to this User
+	 */
 	@FXML
 	ListView<Album> albumListView;
+	/**
+	 * The FXML ListView displaying the results of the search
+	 */
 	@FXML
 	ListView<Photo> searchResults;
+	/**
+	 * The FXML TextField to name a new Album
+	 */
 	@FXML
 	TextField albumField;
+	/**
+	 * The FXML TextField displaying a welcome message to the User
+	 */
 	@FXML
 	TextField welcome;
+	/**
+	 * The FXML TextField to display the selected Album's name
+	 */
 	@FXML 
 	TextField albumNameDetail;
+	/**
+	 * The FXML TextField to display the selected Album's total number of photos
+	 */
 	@FXML
 	TextField albumNumPhotoDetail;
+	/**
+	 * The FXML TextField to display the selected Album's earliest date
+	 */
 	@FXML
 	TextField albumDate1Detail;
+	/**
+	 * The FXML TextField to display the selected Album's latest date
+	 */
 	@FXML
 	TextField albumDate2Detail;
+	/**
+	 * The FXML Button to confirm the addition of a new Album
+	 */
 	@FXML
 	Button confirmAdd;
+	/**
+	 * The FXML Button to cancel the addition of a new Album
+	 */
 	@FXML
 	Button newAlbumCancel;
+	/**
+	 * The current User logged in to the application
+	 */
 	User currentUser;
 	SimpleDateFormat dateTimeformat = new SimpleDateFormat("MM/dd/yyyy");
-	
+	/**
+	 * The ObservableList displaying the List of Albums
+	 */
 	private ObservableList<Album> obsList; 
+	/**
+	 * the List of Albums belonging to this User
+	 */
 	List<Album> AlbumList = new ArrayList<Album>();
-	List<String> albumStringList = new ArrayList<String>();
-	List<Photo> photoLister = new ArrayList<Photo>();
-	
+	/**
+	 * The main start method for UserController
+	 * @param mainStage the Stage to execute on 
+	 * @param user the current User that's logged in
+	 * @throws IOException
+	 */
 	public void start(Stage mainStage, User user) throws IOException{
 		welcome.setText("Welcome " + user.getUsername() + ", Please select an Album: ");
 		albumField.setDisable(true);
@@ -114,10 +183,10 @@ public class UserController {
 				albumDetail(mainStage));
 		
 		}
-	
-	public void search(ActionEvent e) throws IOException{
-		System.out.println("search pushed!");
-	}
+	/**
+	 * Displays the name, number of Photos, and date range of the current Album on the side display area upon selection of a ListView item
+	 * @param mainStage the stage to execute on
+	 */
 	private void albumDetail(Stage mainStage) {
 		if (!albumListView.getSelectionModel().isEmpty()) {
 			Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
@@ -148,6 +217,9 @@ public class UserController {
 			albumDate2Detail.setText(latestDate);
 		}
 	}
+	/**
+	 * Displays the name, number of Photos, and date range of the current Album on the side display area without selection of a ListView item
+	 */
 	private void albumDetailV2() {
 		if (!albumListView.getSelectionModel().isEmpty()) {
 			Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
@@ -176,7 +248,10 @@ public class UserController {
 			albumDate2Detail.setText(latestDate);
 		}
 	}
-	
+	/**
+	 * Logs out of the application, allowing another User to log in
+	 * @throws IOException
+	 */
     public void logout() throws IOException{
     	System.out.println("logout pushed!");
     	Stage stage = new Stage();
@@ -190,6 +265,11 @@ public class UserController {
 		stage.setTitle("User Login");
 		stage.show(); 
 	}
+    /**
+     * Allows the creation of a new Album by disabling and enabling certain Buttons
+     * @param e the ActionEvent to activate newAlbum()
+     * @throws IOException
+     */
     public void newAlbum(ActionEvent e) throws IOException{
     	albumField.setDisable(false);
 		confirmAdd.setDisable(false);
@@ -202,6 +282,11 @@ public class UserController {
 		openAlbum.setDisable(true);
 		search.setDisable(true);
 	}
+    /**
+     * Allows the renaming of an existing Album by disabling and enabling certain Buttons
+     * @param e the ActionEvent to activate renameAlbum()
+     * @throws IOException
+     */
     public void renameAlbum(ActionEvent e) throws IOException{
     	System.out.println("Rename Album pushed!");
     	if (albumListView.getSelectionModel().getSelectedItem() != null) {
@@ -227,6 +312,11 @@ public class UserController {
     		alert.showAndWait();
     	}
 	}
+    /**
+     * Confirms the renaming of an existing Album
+     * @param e the ActionEvent that will activate renameConfirm()
+     * @throws IOException
+     */
     public void renameConfirm(ActionEvent e) throws IOException{
     	Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
     	selectedAlbum.albumName = albumNameDetail.getText();
@@ -247,6 +337,10 @@ public class UserController {
 		search.setDisable(false);
 		newAlbum.setDisable(false);
     }
+    /**
+     * Cancels the renaming of an existing Album
+     * @param e the ActionEvent to activate renameCancel()
+     */
     public void renameCancel(ActionEvent e) {
     	albumDetailV2();
     	albumNameDetail.setEditable(false);
@@ -263,6 +357,11 @@ public class UserController {
 		search.setDisable(false);
 		newAlbum.setDisable(false);
     }
+    /**
+     * Deletes an existing Album from the List of Albums
+     * @param e the ActionEvent to activate delAlbum()
+     * @throws IOException
+     */
     public void delAlbum(ActionEvent e) throws IOException {
     	System.out.println("Delete Album pushed!");
     	if (albumListView.getSelectionModel().getSelectedItem() != null) {
@@ -284,6 +383,11 @@ public class UserController {
 			alert2.showAndWait();
 		}
     }
+    /**
+     * Opens the currently selected Album, redirecting to a new screen 
+     * @return an error String if there is no selected album to open
+     * @throws IOException
+     */
     public String openAlbum() throws IOException{
     	//System.out.println("Open Album pushed!");
     	
@@ -310,10 +414,26 @@ public class UserController {
 			return "error";
     	}
     }
-    
+    /**
+     * Searches all Albums to find Photos that fit the Tag criteria
+     * @param e the ActionEvent to activate search()
+     * @throws IOException
+     */
+    public void search(ActionEvent e) throws IOException{
+		System.out.println("search pushed!");
+	}
+    /**
+     * Creates a new Album based off the current search results
+     * @param e the ActionEvent to activate sCreateAlbum()
+     * @throws IOException
+     */
     public void sCreateAlbum(ActionEvent e) throws IOException{
     	System.out.println("Create Album by Search Results pushed!");
     }
+    /**
+     * Confirms the addition of a new Album into the List of Albums
+     * @param e the ActionEvent to activate confirm()
+     */
     public void confirm(ActionEvent e) {
     	//AlbumList.add(new Album(albumField.getText()));
     	//albumStringList.add(albumField.getText());
@@ -346,6 +466,10 @@ public class UserController {
 		openAlbum.setDisable(false);
 		search.setDisable(false);
     }
+    /**
+     * Cancels the addition of a new Album into the List of Albums
+     * @param e
+     */
     public void albumCancel(ActionEvent e) {
     	albumField.clear();
     	albumField.setDisable(true);
@@ -359,6 +483,9 @@ public class UserController {
 		openAlbum.setDisable(false);
 		search.setDisable(false);
     }
+    /**
+     * Displays the current List of Albums in the ListView
+     */
     public void displayList() {
     	obsList = FXCollections.observableArrayList(currentUser.getAlbums());
 		albumListView.setItems(obsList);

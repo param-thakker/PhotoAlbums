@@ -29,26 +29,56 @@ import controller.LoginController;
 
 import javafx.event.ActionEvent;
 
+/**
+ * The AdminController class handles the user control and logic in the Admin screen
+ * @author Param Thakker
+ * @author Jonathan Lu
+ *
+ */
 public class AdminController {
+	/**
+	 * The FXML Button to add a new User
+	 */
 	@FXML
 	Button addUser;
+	/**
+	 * The FXML Button to delete an existing User
+	 */
 	@FXML
 	Button delUser;
+	/**
+	 * The FXML ListView to display the list of Users
+	 */
 	@FXML
 	ListView<String> userList;
+	/**
+	 * The FXML Button to logout of the application
+	 */
 	@FXML
 	Button aLogout;
+	/**
+	 * The FXML TextField to add a new User
+	 */
 	@FXML
 	TextField userField;
+	/** 
+	 * The FXML Button to confirm the addition of a new User
+	 */
 	@FXML
 	Button confirmAdd;
-	
-	
-	
+	/**
+	 * the list of available Users to login
+	 */
 	List<String> list=new ArrayList<>();
-	
+	/**
+	 * The ObservableList to display the available Users to login
+	 */
 	private ObservableList<String> obsList;  
-	
+	/**
+	 * The main start method for AdminController
+	 * @param mainStage the Stage to execute on
+	 * @throws IOException
+	 */
 	public void start(Stage mainStage) throws IOException{
 		userField.setDisable(true);
 		confirmAdd.setDisable(true);
@@ -62,11 +92,20 @@ public class AdminController {
 			  }
 		  });
 	}
-	
+	/**
+	 * Enables a new User to be added to the list, popping up a textField to enter information
+	 * @param e the ActionEvent to activate addUser()
+	 * @throws IOException
+	 */
 	public void addUser(ActionEvent e) throws IOException {
 		userField.setDisable(false);
 		confirmAdd.setDisable(false);
 	}
+	/**
+	 * Deletes a current User from the list of available Users
+	 * @param e the ActionEvent to activate delUser()
+	 * @throws IOException
+	 */
 	public void delUser(ActionEvent e) throws IOException {
 	
 		if (userList.getSelectionModel().getSelectedItem() != null) {
@@ -89,6 +128,10 @@ public class AdminController {
 
 		}
 	}
+	/**
+	 * Confirms the addition of a new User, checking for duplicates and bad entries
+	 * @param e the ActionEvent to activate confirm()
+	 */
 	public void confirm(ActionEvent e) {
 		if (userField.getText().trim().length()==0 || userField.getText()==null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -119,6 +162,10 @@ public class AdminController {
 			}
 		}
 	}
+	/**
+	 * logs out of the application, allowing a new User to log in
+	 * @throws IOException
+	 */
 	public void logout() throws IOException{
 		Stage stage = new Stage();
 		FXMLLoader loader = new FXMLLoader();   
@@ -131,6 +178,9 @@ public class AdminController {
 		stage.setTitle("User Login");
 		stage.show(); 
 	}
+	/**
+	 * Displays the current List of Users in the ListView
+	 */
 	public void displayList() {
 		for (String user:LoginController.users.keySet()) {
 			if (!user.equals("admin") && !list.contains(user)) {

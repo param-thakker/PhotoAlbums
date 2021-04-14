@@ -6,13 +6,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+/**
+ * The Photos class is the main class that starts the Application
+ * @author Param Thakker
+ * @author Jonathan Lu
+ *
+ */
 public class Photos extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	/**
+	 * 
+	 */
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader();   
 		loader.setLocation(getClass().getResource("/view/Login.fxml"));

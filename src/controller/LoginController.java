@@ -28,19 +28,34 @@ import javafx.stage.Stage;
 import model.User;
 import javafx.event.ActionEvent;
 
-
+/**
+ * The LoginController class handles the user control and logic with regards to the login screen
+ * @author Param Thakker
+ * @author Jonathan Lu
+ *
+ */
 public class LoginController {
-	
+	/**
+	 * The FXML TextField for the username
+	 */
 	@FXML
 	TextField usernameTextField;
-	
+	/**
+	 * The FXML Button to click to login
+	 */
 	@FXML
 	Button login;
 	
-	
+	/**
+	 * The HashMap of Users stored in the system
+	 */
 	static HashMap<String,User> users = new HashMap<>();
 	
-
+	/**
+	 * The main start method for LoginController
+	 * @param mainStage the Stage to execute on
+	 * @throws IOException
+	 */
 	public void start(Stage mainStage) throws IOException{
 	  users.put("admin", new User("admin"));
 	  users.put("stock", new User("stock"));
@@ -55,7 +70,10 @@ public class LoginController {
 		  }
 	  });
 	}
-	
+	/**
+	 * Handles an attempted login, checking the usernameTextField with the list of allowed users and redirects the screen accordingly
+	 * @throws IOException
+	 */
 	public void login() throws IOException {
 		String username=usernameTextField.getText();
 		if(username.trim().length()==0 || username==null ) {
