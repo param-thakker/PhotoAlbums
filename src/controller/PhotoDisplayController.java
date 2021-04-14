@@ -12,10 +12,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -162,7 +164,7 @@ public class PhotoDisplayController {
 		FileChooser photoPicker = new FileChooser();
 		photoPicker.setTitle("Please select an image to import");
 		photoPicker.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.bmp", "*.BMP", "*.gif", "*.GIF", "*.jpg", "*.JPG", "*.png", "*.PNG"));
-		System.out.println("I am here");		
+		//System.out.println("I am here");		
 		File chosenPicture = photoPicker.showOpenDialog(null);
 		
 		if (chosenPicture != null) {
@@ -356,6 +358,24 @@ public class PhotoDisplayController {
 		obsList = FXCollections.observableArrayList(currentAlbum.getPhotos()); 
 
 		photoList.setItems(obsList); 
+		photoList.setCellFactory(listView -> new ListCell<Photo>() {
+		    private ImageView photoView = new ImageView();
+		    @Override
+		    public void updateItem(Photo photo, boolean empty) {
+		        super.updateItem(photo, empty);
+		        if (empty) {
+		            setText(null);
+		            setGraphic(null);
+		        } else {
+		            Image image = new Image(photo.source);
+		            photoView.setFitHeight(50);
+		            photoView.setFitWidth(70);
+		            photoView.setImage(image);
+		            setText(photo.photoCaption);
+		            setGraphic(photoView);
+		        }
+		    }
+		});
 	}
 	
 	
