@@ -1,7 +1,9 @@
 package controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +33,8 @@ import model.Album;
 import model.Photo;
 import model.Tag;
 import model.User;
+
+
 import java.text.*;
 /**
  * The PhotoDisplayController class handles the user control and logic in the PhotoDisplay screen
@@ -47,6 +51,7 @@ public class PhotoDisplayController {
 	 * The User that is currently logged in
 	 */
 	private User currentUser;
+	private List<User> users;
 	
 	/**
 	 * The FXML Button to enable the addition of a new Tag
@@ -123,9 +128,11 @@ public class PhotoDisplayController {
 	 */
 	@FXML	
 	Button confirmCaption;
+
 	/**
 	 * The FXML ImageView to display the currently selected Photo
 	 */
+
 	@FXML
 	ImageView photoView;
 	/**
@@ -133,6 +140,8 @@ public class PhotoDisplayController {
 	 */
 	@FXML	
 	Button confirmTag;
+	@FXML	
+	Button cancelTag;
 	
 
 	SimpleDateFormat dateTimeformat = new SimpleDateFormat("MM/dd/yyyy '@' hh:mm a");
@@ -149,6 +158,7 @@ public class PhotoDisplayController {
 	private ObservableList<Photo> obsList;  
 
 	
+
 	/**
 	 * The main start method of PhotoDisplayController
 	 * @param mainStage the Stage to execute on
@@ -156,13 +166,19 @@ public class PhotoDisplayController {
 	 * @param user the User that's currently logged in
 	 * @throws IOException
 	 */
-	public void start(Stage mainStage,Album album, User user) throws IOException{
+	
+
+	public void start(Stage mainStage,Album album, User user,List<User> users, List<Photo> photoList) throws IOException {
+		this.list=photoList;
+		displayList();
+		//obsList = FXCollections.observableArrayList(photoList); 
+		//this.photoList.setItems(obsList); 
 		
 		this.currentAlbum=album;
 		this.currentUser=user;
-		displayList();
+		this.users=users;
 		confirmCaption.setVisible(false);
-
+		cancelTag.setVisible(false);
 		captionCancel.setVisible(false);
 		albumHeader.setText(album.albumName);
 		
@@ -180,6 +196,7 @@ public class PhotoDisplayController {
 			  }
 		  });
 		
+//<<<<<<< Updated upstream
 		movePhoto.setOnAction(e -> {
 			try {
 				movePhoto();
@@ -196,13 +213,18 @@ public class PhotoDisplayController {
 			}
 		});
 		
-		photoList
+
+
+		
+		this.photoList
 		.getSelectionModel()
 		.selectedIndexProperty()
 		.addListener(
 				(obs, oldVal, newVal) -> 
 				photoDetail(mainStage));
 	
+		//this.photoList.setItems(FXCollections.observableArrayList(photoList));
+		
 		
 		
 	}
@@ -212,6 +234,7 @@ public class PhotoDisplayController {
 	 */
 	private void photoDetail(Stage mainStage) { 
 		if (!photoList.getSelectionModel().isEmpty()) {
+			photoView.setVisible(true);
 			addCaptionButton.setVisible(true);
 			Photo photo=photoList.getSelectionModel().getSelectedItem();
 			Image p = new Image(photo.source);
@@ -220,8 +243,13 @@ public class PhotoDisplayController {
 			Calendar date=photo.getPhotoDate();
 			caption.setText(cap);
 			dateCapturedField.setText(dateTimeformat.format(date.getTime()));
+/*<<<<<<< Updated upstream
 			List<Tag> tags=photo.getPhotoTags();
 			tagListView.setItems(FXCollections.observableArrayList(photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
+=======*/
+			this.tagListView.setItems(FXCollections.observableArrayList(this.photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
+			
+
 		}
 	}
 	/**
@@ -230,6 +258,7 @@ public class PhotoDisplayController {
 	 */
 	private void photoDetailV2() {
 		if (!photoList.getSelectionModel().isEmpty()) {
+			photoView.setVisible(true);
 			addCaptionButton.setVisible(true);
 			Photo photo=photoList.getSelectionModel().getSelectedItem();
 			Image p = new Image(photo.source);
@@ -241,7 +270,7 @@ public class PhotoDisplayController {
 			List<Tag> tags=photo.getPhotoTags();
 			caption.setText(cap);
 			dateCapturedField.setText(dateTimeformat.format(date.getTime()));
-			tagListView.setItems(FXCollections.observableArrayList(photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
+			this.tagListView.setItems(FXCollections.observableArrayList(this.photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
 		}
 	}
 	/**
@@ -254,7 +283,7 @@ public class PhotoDisplayController {
 		loader.setLocation(getClass().getResource("/view/AlbumDisplay.fxml"));
 		AnchorPane root = (AnchorPane)loader.load();
 		UserController userController = loader.getController();
-		userController.start(stage,currentUser);
+		userController.start(stage,currentUser,users);
 		Scene scene = new Scene(root,923,671);
 		stage.setScene(scene);
 		root.getScene().getWindow().hide();
@@ -275,36 +304,38 @@ public class PhotoDisplayController {
 		if (chosenPicture != null) {
 			Image image = new Image(chosenPicture.toURI().toString());
 			String name = chosenPicture.getName();
-			//Date photoDate = Calendar.getInstance();
 			Calendar photoDate = Calendar.getInstance();
 			photoDate.setTimeInMillis(chosenPicture.lastModified());
 			
 			//photoDate.set(Calendar.MILLISECOND,0);
 			Photo photoToBeAdded = new Photo(name,"", photoDate, chosenPicture.toURI().toString());
-			if (currentAlbum.getPhotos()==null || currentAlbum.getPhotos().size()==0) {
-				list.add(photoToBeAdded);
-				currentAlbum.addPhoto(photoToBeAdded);
-			}
-			else {
-				for (Photo currentPhoto : currentAlbum.getPhotos()) {
-					if (currentPhoto.source.equals(photoToBeAdded.source)) {
-						Alert alert = new Alert(AlertType.ERROR);
-						alert.setTitle("Error in Adding New Photo");
-						//alert.setHeaderText("Photo Add Error.");
-						alert.setContentText("This photo already exists in the album");
-	
-						alert.showAndWait();
-						return;
-					}
+			
+			for (Photo currentPhoto : currentAlbum.getPhotos()) {
+				if ( (currentPhoto.getPhotoName().equals(photoToBeAdded.getPhotoName())) && (currentPhoto.getPhotoSource().equals(photoToBeAdded.getPhotoSource()))) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error in Adding New Photo");
+					//alert.setHeaderText("Photo Add Error.");
+					alert.setContentText("This photo already exists in the album");
+
+					alert.showAndWait();
+					return;
+
 				}
-				list.add(photoToBeAdded);
-				currentAlbum.addPhoto(photoToBeAdded);
+	
 			}
+		
+	
+			
+			this.photoList.getItems().add(photoToBeAdded);
+			
+			currentAlbum.getPhotos().add(photoToBeAdded);
 				
-			displayList();			
-			//photos.getItems().add(photoToBeAdded);
-			//selectedAlbum.getPhotos().add(photoToBeAdded);
-			//CommonFunctions.saveData(users);
+			//displayList();	
+		
+			autoSave(users);
+	
+			
+
 		}
 		
 	}
@@ -315,29 +346,44 @@ public class PhotoDisplayController {
 	public void delPhoto(ActionEvent e) {
 	if (photoList.getSelectionModel().getSelectedItem() != null) {
     		
-    		String photoToBeRemoved = photoList.getSelectionModel().getSelectedItem().getPhotoName();
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + photoToBeRemoved + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+    		Photo photoToBeRemoved = photoList.getSelectionModel().getSelectedItem();
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + photoList.getSelectionModel().getSelectedItem().getPhotoName() + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 			alert.showAndWait();
 
-			int currIndex = photoList.getSelectionModel().getSelectedIndex();
 			if (alert.getResult() == ButtonType.YES) {
-				//List<Album> currentUserAlbumlist= currentUser.getAlbums();
-				//for (Album alb:currentUserAlbumList)
-				currentAlbum.getPhotos().remove(photoList.getSelectionModel().getSelectedItem());
+				
+			//	if (this.photoList.getItems().size()==1) {
+				//photoView.setImage(null);
+			//	}
+				currentAlbum.getPhotos().remove(photoToBeRemoved);
+				this.photoList.getItems().remove(photoToBeRemoved);
+				photoView.setVisible(false);
 				//currentUser.getAlbums().getPhotos().remove(photoList.getSelectionModel().getSelectedItem());
-				//photoList.getItems().remove(currIndex);
-				list.remove(photoList.getSelectionModel().getSelectedItem());
-				displayList();
-				photoView.setImage(null);
+			
+				//this.list.remove(photoToBeRemoved);
+				
+			//	displayList();
+				//if (this.photoList.getItems().size()==0) {
+				//photoView.setImage(null);
+				//}
 				caption.clear();
 				dateCapturedField.clear();
+
 				tagListView.setItems(null);
+
+				tagNameField.clear();
+				tagValueField.clear(); 
+				
+				autoSave(users);
+				
+
 			}
     	}else {
     		Alert alert2 = new Alert(AlertType.ERROR);
 			alert2.setHeaderText("No selected album to delete!");
 			alert2.showAndWait();
 		}
+	
 	}
 	/**
 	 * Enables the moving of a Photo from this Album to another by opening up the MoveCopyPhoto screen
@@ -373,9 +419,17 @@ public class PhotoDisplayController {
 	 * @param e the ActionEvent to activate addTag()
 	 */
 	public void addTag(ActionEvent e) {
+		if (photoList.getSelectionModel().getSelectedItem()==null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText("No photo selected to add tags");
+			alert.showAndWait();
+		}
+		else {
 		tagNameField.setVisible(true);
 		tagValueField.setVisible(true);
 		confirmTag.setVisible(true);
+		cancelTag.setVisible(true);
+		}
 	}
 	/**
 	 * Deletes the currently selected Tag from the selected Photo.
@@ -388,16 +442,18 @@ public class PhotoDisplayController {
 			Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + tagToBeRemoved + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 			alert.showAndWait();
 
-			int currIndex = tagListView.getSelectionModel().getSelectedIndex();
 			if (alert.getResult() == ButtonType.YES) {
 				photoToBeRemoved.getPhotoTags().remove(tagToBeRemoved);
-				tagListView.setItems(FXCollections.observableArrayList(photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
+				tagListView.getItems().remove(tagToBeRemoved);
+				tagListView.refresh();
+				autoSave(users);
 			}
     	} else {
     		Alert alert2 = new Alert(AlertType.ERROR);
 			alert2.setHeaderText("No selected tag name-value to delete!");
 			alert2.showAndWait();
 		}
+		
 	}
 	/**
 	 * Selects the preceding Photo in the Album
@@ -438,11 +494,21 @@ public class PhotoDisplayController {
 				if (alert.getResult() == ButtonType.YES) {
 					Photo selectedPhoto=photoList.getSelectionModel().getSelectedItem();
 					Tag tag=new Tag(tagNameField.getText(),tagValueField.getText());
-					selectedPhoto.getPhotoTags().add(tag);
-					//obsList = FXCollections.observableArrayList(list); 
-
-					//photoList.setItems(obsList); 
-					tagListView.setItems(FXCollections.observableArrayList(photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
+					List<Tag> photoTags=selectedPhoto.getPhotoTags();
+					for (Tag ptag:photoTags) {
+						if ((ptag.tagName.equals(tag.tagName)) && (ptag.tagValue.equals(tag.tagValue))) {
+							Alert erroralert = new Alert(AlertType.ERROR);
+							erroralert.setHeaderText("This tag name-value pair already exists!");
+							erroralert.showAndWait();
+							return;
+						}
+					}
+					photoTags.add(tag);
+					tagListView.getItems().add(tag);
+					
+					tagListView.refresh();
+					//tagListView.setItems(FXCollections.observableArrayList(photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
+					autoSave(users);
 					tagNameField.clear();
 					tagValueField.clear();
 					
@@ -454,6 +520,9 @@ public class PhotoDisplayController {
 	
 			
 		}
+
+
+	
 	}
 	/**
 	 * Enables the captioning (or recaptioning) the currently selected Photo.
@@ -483,24 +552,20 @@ public class PhotoDisplayController {
 			alert.showAndWait();
 		}
 		else {
-
-			//String newUser=userField.getText();
-				
-			
+	
 				Alert alert = new Alert(AlertType.CONFIRMATION, "Set " + caption.getText() + " as caption for this picture?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-			//	alert.setTitle("Add new user");
-
 	
 				alert.showAndWait();
 				if (alert.getResult() == ButtonType.YES) {
 		
 					Photo selectedPhoto=photoList.getSelectionModel().getSelectedItem();
 					selectedPhoto.setPhotoCaption(caption.getText());
-					
+					autoSave(users);
 					displayList();
 					caption.setEditable(false);
 					confirmCaption.setVisible(false);
 					captionCancel.setVisible(false);
+
 				
 				}
 	
@@ -517,12 +582,20 @@ public class PhotoDisplayController {
 		captionCancel.setVisible(false);
 		caption.setText(lastCaption);
 	}
+
 	/**
 	 * Displays the thumbnails of all the images in the album in the top bar, as well as their respective captions
 	 */
+
+	public void tagCancel(ActionEvent e) {
+		tagNameField.setVisible(false);
+		tagValueField.setVisible(false);
+		confirmTag.setVisible(false);
+		cancelTag.setVisible(false);
+	}
+
 	public void displayList() {
-		
-		obsList = FXCollections.observableArrayList(currentAlbum.getPhotos()); 
+		obsList = FXCollections.observableArrayList(this.list); 
 
 		photoList.setItems(obsList); 
 		photoList.setCellFactory(listView -> new ListCell<Photo>() {
@@ -543,6 +616,19 @@ public class PhotoDisplayController {
 		        }
 		    }
 		});
+		
+	}
+	public static void autoSave(List<User> users) {
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream("data/data.dat");
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+			objectOutputStream.writeObject(users);
+
+			objectOutputStream.close();
+			fileOutputStream.close();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 	}
 	
 	

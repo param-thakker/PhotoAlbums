@@ -28,10 +28,16 @@ public class User implements Serializable {
 		this.username=user;
 		this.userAlbums=new ArrayList<>();
 	}
+
 	/**
 	 * gets the username of the User
 	 * @return the String username of the User
 	 */
+
+	public String toString() {
+		return this.getUsername();
+	}
+
 	public String getUsername() {
 		return this.username;
 	}

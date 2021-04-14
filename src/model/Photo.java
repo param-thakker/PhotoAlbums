@@ -83,4 +83,10 @@ public class Photo implements Serializable {
 	public void setPhotoCaption(String caption) {
 		this.photoCaption=caption;
 	}
+	public String getPhotoSource(){
+		return this.source;
+	}
+	public String toString() {
+		return this.getPhotoName();
+	}
 }

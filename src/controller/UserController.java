@@ -1,7 +1,9 @@
 package controller;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,11 +33,13 @@ import javafx.event.ActionEvent;
 import model.Album;
 import model.Photo;
 import model.User;
+
 /**
  * The UserController class handles the user control and logic in the AlbumDisplay screen
  * @author Jonathan Lu
  * @author Param Thakker
  */
+
 public class UserController {
 	/**
 	 * The FXML Button to logout of the application
@@ -137,6 +141,7 @@ public class UserController {
 	 * The current User logged in to the application
 	 */
 	User currentUser;
+	List<User> users;
 	SimpleDateFormat dateTimeformat = new SimpleDateFormat("MM/dd/yyyy");
 	/**
 	 * The ObservableList displaying the List of Albums
@@ -146,17 +151,28 @@ public class UserController {
 	 * the List of Albums belonging to this User
 	 */
 	List<Album> AlbumList = new ArrayList<Album>();
+
 	/**
 	 * The main start method for UserController
 	 * @param mainStage the Stage to execute on 
 	 * @param user the current User that's logged in
 	 * @throws IOException
 	 */
-	public void start(Stage mainStage, User user) throws IOException{
+
+
+	List<String> albumStringList = new ArrayList<String>();
+	List<Photo> photoLister = new ArrayList<Photo>();
+	
+	public void start(Stage mainStage, User user, List<User> users) throws IOException {
+
 		welcome.setText("Welcome " + user.getUsername() + ", Please select an Album: ");
+		
 		albumField.setDisable(true);
 		confirmAdd.setDisable(true);
+		
+		this.users = users;
 		this.currentUser=user;
+		
 		displayList();
 		
 		logout.setOnAction(e-> {
@@ -189,6 +205,10 @@ public class UserController {
 	 */
 	private void albumDetail(Stage mainStage) {
 		if (!albumListView.getSelectionModel().isEmpty()) {
+			albumNameDetail.setVisible(true);
+			albumNumPhotoDetail.setVisible(true);
+			albumDate1Detail.setVisible(true);
+			albumDate2Detail.setVisible(true);
 			Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
 			
 			albumNameDetail.setText(selectedAlbum.albumName);
@@ -222,6 +242,10 @@ public class UserController {
 	 */
 	private void albumDetailV2() {
 		if (!albumListView.getSelectionModel().isEmpty()) {
+			albumNameDetail.setVisible(true);
+			albumNumPhotoDetail.setVisible(true);
+			albumDate1Detail.setVisible(true);
+			albumDate2Detail.setVisible(true);
 			Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
 			
 			albumNameDetail.setText(selectedAlbum.albumName);
@@ -282,12 +306,16 @@ public class UserController {
 		openAlbum.setDisable(true);
 		search.setDisable(true);
 	}
+
     /**
      * Allows the renaming of an existing Album by disabling and enabling certain Buttons
      * @param e the ActionEvent to activate renameAlbum()
      * @throws IOException
      */
-    public void renameAlbum(ActionEvent e) throws IOException{
+    
+
+    public void renameAlbum(ActionEvent e) throws IOException {
+
     	System.out.println("Rename Album pushed!");
     	if (albumListView.getSelectionModel().getSelectedItem() != null) {
     		albumNameDetail.setOpacity(1);
@@ -312,14 +340,20 @@ public class UserController {
     		alert.showAndWait();
     	}
 	}
+
     /**
      * Confirms the renaming of an existing Album
      * @param e the ActionEvent that will activate renameConfirm()
      * @throws IOException
      */
-    public void renameConfirm(ActionEvent e) throws IOException{
+    
+    public void renameConfirm(ActionEvent e) throws IOException {
+
     	Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
     	selectedAlbum.albumName = albumNameDetail.getText();
+    	
+    	autoSave(users);
+    	
     	displayList();
     	albumDetailV2();
     	
@@ -373,9 +407,19 @@ public class UserController {
 			int currIndex = albumListView.getSelectionModel().getSelectedIndex();
 			if (alert.getResult() == ButtonType.YES) {
 				currentUser.getAlbums().remove(albumListView.getSelectionModel().getSelectedItem());
-				albumListView.getItems().remove(currIndex);
-				//AlbumList.remove(currIndex);
-				//albumStringList.remove(currIndex);
+				albumListView.getItems().remove(albumListView.getSelectionModel().getSelectedItem());
+
+				autoSave(users);
+				displayList();
+				
+				if (albumListView.getItems().size()==0 || albumListView==null) {
+					albumNameDetail.clear();
+					albumNumPhotoDetail.clear();
+					albumDate1Detail.clear();
+					albumDate2Detail.clear();
+			
+					
+				}
 			}
     	}else {
     		Alert alert2 = new Alert(AlertType.ERROR);
@@ -389,22 +433,20 @@ public class UserController {
      * @throws IOException
      */
     public String openAlbum() throws IOException{
-    	//System.out.println("Open Album pushed!");
-    	
+
     	if (albumListView.getSelectionModel().getSelectedItem() != null) {
-    		//open album **CURRENTLY GIVES NULLPOINTER idk how to fix this yet**
     		Album selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
     		Stage stage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/PhotoDisplay.fxml"));
 			AnchorPane root = (AnchorPane)loader.load();
 			PhotoDisplayController photoController = loader.getController();
-			photoController.start(stage, selectedAlbum,currentUser);
+			photoController.start(stage, selectedAlbum,currentUser,users,selectedAlbum.getPhotos());
 			Scene scene = new Scene(root,923,671);
 			stage.setScene(scene);
-			root.getScene().getWindow().hide(); //currently doesnt work properly
+			root.getScene().getWindow().hide(); 
 			stage.show();
-			return "";//*/ 
+			return "";
 			
 			
     	}else {
@@ -452,6 +494,8 @@ public class UserController {
     		}
     	}
     	currentUser.getAlbums().add(new Album(albumField.getText()));
+		albumListView.getItems().add(new Album(albumField.getText()));
+    	autoSave(users);
 		displayList();
 		
 		albumField.clear();
@@ -489,5 +533,19 @@ public class UserController {
     public void displayList() {
     	obsList = FXCollections.observableArrayList(currentUser.getAlbums());
 		albumListView.setItems(obsList);
+		
 	}
+	public static void autoSave(List<User> users) {
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream("data/data.dat");
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+			objectOutputStream.writeObject(users);
+
+			objectOutputStream.close();
+			fileOutputStream.close();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+	
 }

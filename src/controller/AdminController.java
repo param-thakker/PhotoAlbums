@@ -1,7 +1,9 @@
 package controller;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,10 +52,12 @@ public class AdminController {
 	 * The FXML ListView to display the list of Users
 	 */
 	@FXML
-	ListView<String> userList;
+	ListView<User> userList;
+
 	/**
 	 * The FXML Button to logout of the application
 	 */
+
 	@FXML
 	Button aLogout;
 	/**
@@ -70,20 +74,30 @@ public class AdminController {
 	 * the list of available Users to login
 	 */
 	List<String> list=new ArrayList<>();
+//<<<<<<< Updated upstream
 	/**
 	 * The ObservableList to display the available Users to login
 	 */
-	private ObservableList<String> obsList;  
+	//private ObservableList<String> obsList;  
 	/**
 	 * The main start method for AdminController
 	 * @param mainStage the Stage to execute on
 	 * @throws IOException
 	 */
-	public void start(Stage mainStage) throws IOException{
+	//public void start(Stage mainStage) throws IOException {
+//=======
+	List<User> usersList=new ArrayList<>();
+	
+	//private ObservableList<String> obsList;  
+	
+	public void start(Stage mainStage, List<User> users) throws IOException {
+		this.usersList=users;
+		userList.setItems(FXCollections.observableArrayList(users));
+//>>>>>>> Stashed changes
 		userField.setDisable(true);
 		confirmAdd.setDisable(true);
 		
-		displayList();		
+		//displayList();		
 		aLogout.setOnAction(e -> {
 			  try {
 				  logout();
@@ -109,15 +123,15 @@ public class AdminController {
 	public void delUser(ActionEvent e) throws IOException {
 	
 		if (userList.getSelectionModel().getSelectedItem() != null) {
-	        String selectedUser=userList.getSelectionModel().getSelectedItem();
-	        Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + selectedUser + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+	        User selectedUser=userList.getSelectionModel().getSelectedItem();
+	        Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + selectedUser.getUsername() + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 			alert.setTitle("Delete user");
 			alert.showAndWait();
 			int currIndex = userList.getSelectionModel().getSelectedIndex();
 			if (alert.getResult() == ButtonType.YES) {
-				userList.getItems().remove(currIndex);
-				list.remove(currIndex);
-				LoginController.users.remove(selectedUser);
+				userList.getItems().remove(selectedUser);
+				autoSave();
+				
 		
 			}
 	    }
@@ -140,26 +154,32 @@ public class AdminController {
 		}
 		else {
 			String newUser=userField.getText();
-			if (LoginController.users.containsKey(newUser)) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setHeaderText("This username already exists");
-				alert.showAndWait();
+			//if (LoginController.users.containsKey(newUser)) {
+			for (User user:this.usersList) {
+				if (user.getUsername().equals(newUser)) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setHeaderText("This username already exists");
+					alert.showAndWait();
+					return;
+				}
 			}
-			else {
+				
+			//}
+		//	else {
 				Alert alert = new Alert(AlertType.CONFIRMATION, "Add " + newUser + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 				alert.setTitle("Add new user");
 				alert.showAndWait();
 				if (alert.getResult() == ButtonType.YES) {
-					LoginController.users.put(newUser, new User(newUser));
 					
-					displayList();
+					userList.getItems().add(new User(newUser));
+					autoSave();
 					userField.clear();
 					userField.setDisable(true);
 					confirmAdd.setDisable(true);
 				
 				}
 	
-			}
+			//}
 		}
 	}
 	/**
@@ -178,10 +198,21 @@ public class AdminController {
 		stage.setTitle("User Login");
 		stage.show(); 
 	}
-	/**
-	 * Displays the current List of Users in the ListView
-	 */
-	public void displayList() {
+
+	private void autoSave() {
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream("data/data.dat");
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+			objectOutputStream.writeObject(new ArrayList<>(Arrays.asList(userList.getItems().toArray())));
+			objectOutputStream.close();
+			fileOutputStream.close();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+	/*public void displayList() {
+>>>>>>> Stashed changes
 		for (String user:LoginController.users.keySet()) {
 			if (!user.equals("admin") && !list.contains(user)) {
 			list.add(user);
@@ -190,6 +221,6 @@ public class AdminController {
 		obsList = FXCollections.observableArrayList(list); 
 
 		userList.setItems(obsList); 
-	}
+	}*/
 	
 }
