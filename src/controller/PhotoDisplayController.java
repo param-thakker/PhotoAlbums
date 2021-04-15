@@ -638,7 +638,7 @@ public class PhotoDisplayController {
 			for (Album alb:this.currentUser.getAlbums()) {
 				System.out.println(alb.getAlbumName());
 				if (alb.getAlbumName().equals(newAlbum)) {
-					System.out.println("Entered");
+				
 					for (Photo photo:alb.getPhotos()) {
 						if ((photo.getPhotoName().equals(photoToBeMoved.getPhotoName())) && (photo.getPhotoSource().equals(photoToBeMoved.getPhotoSource()))) {
 							Alert palert = new Alert(AlertType.ERROR);
