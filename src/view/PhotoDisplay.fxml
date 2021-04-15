@@ -37,7 +37,7 @@
                   <Button fx:id="prevPhoto" layoutX="22.0" layoutY="437.0" mnemonicParsing="false" onAction="#prevPhoto" text="&lt;&lt;" />
                   <Button fx:id="nextPhoto" layoutX="583.0" layoutY="436.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;&gt;" />
                   <Button fx:id="captionCancel" layoutX="490.0" layoutY="437.0" mnemonicParsing="false" onAction="#captionCancel" text="Cancel" />
-                  <ImageView fx:id="photoView" fitHeight="377.0" fitWidth="729.0" layoutX="17.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="photoView" fitHeight="377.0" fitWidth="700.0" layoutX="17.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
                   <ListView fx:id="tagListView" layoutX="725.0" layoutY="162.0" prefHeight="175.0" prefWidth="175.0" />
                   <Label layoutX="735.0" layoutY="143.0" text="Tags:" />
                   <TextField editable="false" layoutX="700.0" layoutY="50.0" prefHeight="26.0" prefWidth="128.0" text="Selected Photo Info:" /> 
