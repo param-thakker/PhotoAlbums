@@ -184,8 +184,6 @@ public class PhotoDisplayController {
 	 * @param photoList the list of photos in this Album
 	 * @throws IOException
 	 */
-	
-
 	public void start(Stage mainStage,Album album, User user,List<User> users, List<Photo> photoList) throws IOException {
 		this.list=photoList;
 		displayList();
@@ -411,10 +409,9 @@ public class PhotoDisplayController {
 
 	}
 	/**
-	 * Enables the copying of a Photo from this Album to another by opening up the MoveCopyPhoto screen
+	 * Enables the copying of a Photo from this Album to another Album
 	 * @throws IOException
 	 */
-
 	public void copyPhoto(ActionEvent e) throws IOException{
 		identifier=(Button) e.getSource();
 		if (photoList.getSelectionModel().getSelectedItem()==null) {
@@ -631,7 +628,9 @@ public class PhotoDisplayController {
 		});
 		
 	}
-	
+	/**
+	 * Confirms the moving of a Photo from one Album to another, using the identifier to determine whether to copy or move
+	 */
 	public void moveConfirm() {
 			Photo photoToBeMoved=photoList.getSelectionModel().getSelectedItem();
 			String newAlbum=albumField.getText();
