@@ -326,7 +326,7 @@ public class UserController {
 
     public void renameAlbum(ActionEvent e) throws IOException {
 
-    	System.out.println("Rename Album pushed!");
+    	//System.out.println("Rename Album pushed!");
     	if (albumListView.getSelectionModel().getSelectedItem() != null) {
     		albumNameDetail.setOpacity(1);
     		albumNameDetail.setPromptText("Enter new Album name here");
