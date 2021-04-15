@@ -552,12 +552,12 @@ public class PhotoDisplayController {
 	 * @param e the ActionEvent to activate confirm()
 	 */
 	public void confirm(ActionEvent e) {
-		if (caption.getText().trim().length()==0 || caption.getText()==null) {
+		/*if (caption.getText().trim().length()==0 || caption.getText()==null) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setHeaderText("No caption entered! Please enter a caption");
 			alert.showAndWait();
-		}
-		else {
+		}*/
+		//else {
 	
 				Alert alert = new Alert(AlertType.CONFIRMATION, "Set " + caption.getText() + " as caption for this picture?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 	
@@ -576,7 +576,7 @@ public class PhotoDisplayController {
 				}
 	
 			
-		}
+		//}
 	}
 	/**
 	 * Cancels the current attempted caption/recaptioning of the currently selected Photo, and sets the caption to the last known caption
@@ -618,7 +618,7 @@ public class PhotoDisplayController {
 		            photoView.setFitHeight(50);
 		            photoView.setFitWidth(70);
 		            photoView.setImage(image);
-		            setText(photo.photoCaption);
+		            setText(photo.getPhotoName());
 		            setGraphic(photoView);
 		        }
 		    }

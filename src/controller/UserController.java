@@ -70,7 +70,14 @@ public class UserController {
 	 * The FXML Button to search for Photos that meet certain criteria
 	 */
 	@FXML
-	Button search;
+	Button searchB;
+	@FXML
+	Button sLogout;
+	@FXML
+	Button sCreateAlbum;
+	@FXML
+	Button sBacktoAlbums;
+
 	/**
 	 * The FXML Button to confirm the renaming of an Album
 	 */
@@ -184,6 +191,13 @@ public class UserController {
 			}catch (IOException e1) {
 			}
 		});
+		searchB.setOnAction(e-> {
+			try {
+				  search();
+				  mainStage.hide();
+			}catch (IOException e1) {
+			}
+		});
 		
 		albumListView
 		.getSelectionModel()
@@ -191,8 +205,9 @@ public class UserController {
 		.addListener(
 				(obs, oldVal, newVal) -> 
 				albumDetail(mainStage));
+	}
 		
-		}
+		
 	/**
 	 * Displays the name, number of Photos, and date range of the current Album on the side display area upon selection of a ListView item
 	 * @param mainStage the stage to execute on
@@ -298,7 +313,7 @@ public class UserController {
 		renameAlbum.setDisable(true);
 		delAlbum.setDisable(true);
 		openAlbum.setDisable(true);
-		search.setDisable(true);
+		searchB.setDisable(true);
 	}
 
     /**
@@ -325,7 +340,7 @@ public class UserController {
     		
     		delAlbum.setDisable(true);
     		openAlbum.setDisable(true);
-    		search.setDisable(true);
+    		searchB.setDisable(true);
     		newAlbum.setDisable(true);
     		
     	}else {
@@ -362,7 +377,7 @@ public class UserController {
 		
 		delAlbum.setDisable(false);
 		openAlbum.setDisable(false);
-		search.setDisable(false);
+		searchB.setDisable(false);
 		newAlbum.setDisable(false);
     }
     /**
@@ -382,7 +397,7 @@ public class UserController {
 		
 		delAlbum.setDisable(false);
 		openAlbum.setDisable(false);
-		search.setDisable(false);
+		searchB.setDisable(false);
 		newAlbum.setDisable(false);
     }
     /**
@@ -455,9 +470,27 @@ public class UserController {
      * @param e the ActionEvent to activate search()
      * @throws IOException
      */
-    public void search(ActionEvent e) throws IOException{
-		System.out.println("search pushed!");
-	}
+    public void search() throws IOException{
+    	//System.out.println("logout pushed!");
+    	if (albumListView.getItems().size()==0 || albumListView==null ) {
+    		Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText("There are no albums in your account to search on");
+			alert.showAndWait();
+			return;
+    	}
+    	Stage stage = new Stage();
+		FXMLLoader loader = new FXMLLoader();   
+		loader.setLocation(getClass().getResource("/view/SearchDisplay.fxml"));
+		AnchorPane root = (AnchorPane)loader.load();
+		SearchController searchControl = loader.getController();
+		searchControl.start(stage,this.currentUser,this.users);
+		Scene scene = new Scene(root, 700, 700);
+		stage.setScene(scene);
+		stage.setTitle("Search Photos");
+		stage.show(); 
+    	}
+    	
+	
     /**
      * Creates a new Album based off the current search results
      * @param e the ActionEvent to activate sCreateAlbum()
@@ -502,7 +535,7 @@ public class UserController {
 		renameAlbum.setDisable(false);
 		delAlbum.setDisable(false);
 		openAlbum.setDisable(false);
-		search.setDisable(false);
+		searchB.setDisable(false);
     }
     /**
      * Cancels the addition of a new Album into the List of Albums
@@ -519,7 +552,7 @@ public class UserController {
 		renameAlbum.setDisable(false);
 		delAlbum.setDisable(false);
 		openAlbum.setDisable(false);
-		search.setDisable(false);
+		searchB.setDisable(false);
     }
     /**
      * Displays the current List of Albums in the ListView

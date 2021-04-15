@@ -17,7 +17,7 @@
                   <ListView fx:id="photoList" layoutX="16.0" layoutY="50.0" orientation="HORIZONTAL" prefHeight="78.0" prefWidth="890.0" />
                   <Button fx:id="backToAlbum" layoutX="16.0" layoutY="13.0" mnemonicParsing="false" onAction="#backToAlbum" text="Back to Album View" />
                   <Button fx:id="addPhoto" layoutX="832.0" layoutY="14.0" mnemonicParsing="false" onAction="#addPhoto" text="Add Photo" />
-                  <TextField fx:id="albumHeader" alignment="CENTER" editable="false" layoutX="399.0" layoutY="13.0" prefHeight="26.0" prefWidth="122.0" text="**ALBUM NAME**" />
+                  <TextField fx:id="albumHeader" alignment="CENTER" editable="false" layoutX="399.0" layoutY="13.0" prefHeight="26.0" prefWidth="400.0" text="**ALBUM NAME**" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

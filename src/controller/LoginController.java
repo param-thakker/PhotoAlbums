@@ -124,6 +124,7 @@ public class LoginController {
 			for (User currentUser : users) {
 				if (currentUser.getUsername().equals(username)) {
 					user = currentUser;
+					break;
 				}
 			}
 
@@ -137,7 +138,7 @@ public class LoginController {
 					Scene scene = new Scene(root,350,400);
 					stage.setScene(scene);
 					stage.show();	
-					System.out.println("ADMIN");
+					//System.out.println("ADMIN");
 			}
 		
 			else if (user!=null) {
@@ -153,7 +154,7 @@ public class LoginController {
 				stage.show();	
 			}
 			else {
-				//Alert alert = new Alert(AlertType.ERROR);
+
 				Alert erroralert = new Alert(AlertType.ERROR);
 				erroralert.setHeaderText("Error");
 				erroralert.setContentText("Invalid username entered!! Please enter a valid username");
