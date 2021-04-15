@@ -170,6 +170,8 @@ public class PhotoDisplayController {
 	 * @param mainStage the Stage to execute on
 	 * @param album the currently accessed Album
 	 * @param user the User that's currently logged in
+	 * @param users the list of available Users
+	 * @param photoList the list of photos in this Album
 	 * @throws IOException
 	 */
 	
@@ -207,7 +209,7 @@ public class PhotoDisplayController {
 			try {
 				movePhoto();
 			}catch (IOException e1) {
-				System.out.println("bruh exception");
+				//System.out.println("bruh exception");
 			}
 		});
 		
@@ -215,7 +217,7 @@ public class PhotoDisplayController {
 			try {
 				copyPhoto();
 			}catch (IOException e1) {
-				System.out.println("bruh exception");
+				//System.out.println("bruh exception");
 			}
 		});
 		
@@ -392,33 +394,18 @@ public class PhotoDisplayController {
 	
 	}
 	/**
-	 * Enables the moving of a Photo from this Album to another by opening up the MoveCopyPhoto screen
+	 * Enables the moving of a Photo from this Album to another Album
 	 * @throws IOException
 	 */
 	public void movePhoto() throws IOException {
-		//show the move/copy screen on top of the current screen, without hiding the current album
-		Stage stage = new Stage();
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/view/MoveCopyPhoto.fxml"));
-		AnchorPane root = (AnchorPane)loader.load();
-		Scene scene = new Scene(root,600,400);
-		stage.setScene(scene);
-		stage.show();
-		System.out.println("Move Photo");
+		
 	}
 	/**
 	 * Enables the copying of a Photo from this Album to another by opening up the MoveCopyPhoto screen
 	 * @throws IOException
 	 */
 	public void copyPhoto() throws IOException{
-		//show the move/copy screen on top of the current screen, without hiding the current album
-		Stage stage = new Stage();
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/view/MoveCopyPhoto.fxml"));
-		AnchorPane root = (AnchorPane)loader.load();
-		Scene scene = new Scene(root,600,400);
-		stage.setScene(scene);
-		stage.show();
+		
 	}
 	/** 
 	 * Enables the addition of Tags to the selected Photo

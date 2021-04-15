@@ -146,17 +146,18 @@ public class UserController {
 	 */
 	List<Album> AlbumList = new ArrayList<Album>();
 
+	
+
+	//do we need these two?
+	List<String> albumStringList = new ArrayList<String>();
+	List<Photo> photoLister = new ArrayList<Photo>();
 	/**
 	 * The main start method for UserController
 	 * @param mainStage the Stage to execute on 
 	 * @param user the current User that's logged in
+	 * @param users the list of available Users
 	 * @throws IOException
 	 */
-
-
-	List<String> albumStringList = new ArrayList<String>();
-	List<Photo> photoLister = new ArrayList<Photo>();
-	
 	public void start(Stage mainStage, User user, List<User> users) throws IOException {
 
 		welcome.setText("Welcome " + user.getUsername() + ", Please select an Album: ");
@@ -506,7 +507,7 @@ public class UserController {
     }
     /**
      * Cancels the addition of a new Album into the List of Albums
-     * @param e
+     * @param e the ActionEvent to activate albumCancel
      */
     public void albumCancel(ActionEvent e) {
     	albumField.clear();
