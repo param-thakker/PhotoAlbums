@@ -34,7 +34,6 @@ import model.Photo;
 import model.Tag;
 import model.User;
 
-
 import java.text.*;
 /**
  * The PhotoDisplayController class handles the user control and logic in the PhotoDisplay screen
@@ -70,7 +69,7 @@ public class PhotoDisplayController {
 	 * The FXML Button to start moving a photo from one Album to another
 	 */
 	@FXML
-	Button movePhoto;
+	Button movePhotoP;
 	/**
 	 * The FXML Button to start copying a photo from one Album to another
 	 */
@@ -149,6 +148,10 @@ public class PhotoDisplayController {
 	@FXML	
 	Button cancelTag;
 	
+	@FXML
+	TextField albumField;
+	
+	
 	
 	SimpleDateFormat dateTimeformat = new SimpleDateFormat("MM/dd/yyyy '@' hh:mm a");
 
@@ -163,7 +166,14 @@ public class PhotoDisplayController {
 	 */
 	private ObservableList<Photo> obsList;  
 
+	/**
+	 *   Button to confirm move/copy of a photo to a specific album
+	 */
+	@FXML 
+	Button confirmMove;
 	
+	@FXML
+	Button identifier;
 
 	/**
 	 * The main start method of PhotoDisplayController
@@ -177,8 +187,7 @@ public class PhotoDisplayController {
 	public void start(Stage mainStage,Album album, User user,List<User> users, List<Photo> photoList) throws IOException {
 		this.list=photoList;
 		displayList();
-		//obsList = FXCollections.observableArrayList(photoList); 
-		//this.photoList.setItems(obsList); 
+
 		
 		this.currentAlbum=album;
 		this.currentUser=user;
@@ -187,6 +196,8 @@ public class PhotoDisplayController {
 		cancelTag.setVisible(false);
 		captionCancel.setVisible(false);
 		albumHeader.setText(album.albumName);
+		albumField.setVisible(false);
+		confirmMove.setVisible(false);
 		
 
 		tagNameField.setVisible(false);
@@ -203,21 +214,21 @@ public class PhotoDisplayController {
 		  });
 		
 //<<<<<<< Updated upstream
-		movePhoto.setOnAction(e -> {
+		/*movePhoto.setOnAction(e -> {
 			try {
-				movePhoto();
+				movePhoto(e);
 			}catch (IOException e1) {
 				System.out.println("bruh exception");
 			}
-		});
+		});*/
 		
-		copyPhoto.setOnAction(e -> {
+		/*copyPhoto.setOnAction(e -> {
 			try {
-				copyPhoto();
+				copyPhoto(e);
 			}catch (IOException e1) {
 				System.out.println("bruh exception");
 			}
-		});
+		});*/
 		
 
 
@@ -303,8 +314,7 @@ public class PhotoDisplayController {
 	public void addPhoto(ActionEvent e) {
 		FileChooser photoPicker = new FileChooser();
 		photoPicker.setTitle("Please select an image to import");
-		photoPicker.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.bmp", "*.BMP", "*.gif", "*.GIF", "*.jpg", "*.JPG", "*.png", "*.PNG"));
-		//System.out.println("I am here");		
+		photoPicker.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.bmp", "*.BMP", "*.gif", "*.GIF", "*.jpg", "*.JPG", "*.png", "*.PNG"));	
 		File chosenPicture = photoPicker.showOpenDialog(null);
 		
 		if (chosenPicture != null) {
@@ -334,10 +344,7 @@ public class PhotoDisplayController {
 			
 			this.photoList.getItems().add(photoToBeAdded);
 			
-			currentAlbum.getPhotos().add(photoToBeAdded);
-				
-			//displayList();	
-		
+			currentAlbum.getPhotos().add(photoToBeAdded);	
 			autoSave(users);
 	
 			
@@ -357,21 +364,11 @@ public class PhotoDisplayController {
 			alert.showAndWait();
 
 			if (alert.getResult() == ButtonType.YES) {
-				
-			//	if (this.photoList.getItems().size()==1) {
-				//photoView.setImage(null);
-			//	}
+
 				currentAlbum.getPhotos().remove(photoToBeRemoved);
 				this.photoList.getItems().remove(photoToBeRemoved);
 				photoView.setVisible(false);
-				//currentUser.getAlbums().getPhotos().remove(photoList.getSelectionModel().getSelectedItem());
-			
-				//this.list.remove(photoToBeRemoved);
-				
-			//	displayList();
-				//if (this.photoList.getItems().size()==0) {
-				//photoView.setImage(null);
-				//}
+	
 				caption.clear();
 				dateCapturedField.clear();
 
@@ -395,30 +392,39 @@ public class PhotoDisplayController {
 	 * Enables the moving of a Photo from this Album to another by opening up the MoveCopyPhoto screen
 	 * @throws IOException
 	 */
-	public void movePhoto() throws IOException {
-		//show the move/copy screen on top of the current screen, without hiding the current album
-		Stage stage = new Stage();
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/view/MoveCopyPhoto.fxml"));
-		AnchorPane root = (AnchorPane)loader.load();
-		Scene scene = new Scene(root,600,400);
-		stage.setScene(scene);
-		stage.show();
-		System.out.println("Move Photo");
+	public void movePhoto(ActionEvent e) throws IOException {
+		identifier=(Button) e.getSource();
+		if (photoList.getSelectionModel().getSelectedItem()==null) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setHeaderText("No photo selected to move/transfer");
+			errorAlert.showAndWait();
+			return;
+		}
+		
+	
+		albumField.setVisible(true);
+		confirmMove.setVisible(true);
+
 	}
 	/**
 	 * Enables the copying of a Photo from this Album to another by opening up the MoveCopyPhoto screen
 	 * @throws IOException
 	 */
-	public void copyPhoto() throws IOException{
-		//show the move/copy screen on top of the current screen, without hiding the current album
-		Stage stage = new Stage();
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/view/MoveCopyPhoto.fxml"));
-		AnchorPane root = (AnchorPane)loader.load();
-		Scene scene = new Scene(root,600,400);
-		stage.setScene(scene);
-		stage.show();
+	public void copyPhoto(ActionEvent e) throws IOException{
+		identifier=(Button) e.getSource();
+		if (photoList.getSelectionModel().getSelectedItem()==null) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setHeaderText("No photo selected to move/transfer");
+			errorAlert.showAndWait();
+			return;
+		}
+		
+		albumField.setVisible(true);
+		confirmMove.setVisible(true);
+		
+	
+			
+
 	}
 	/** 
 	 * Enables the addition of Tags to the selected Photo
@@ -513,7 +519,6 @@ public class PhotoDisplayController {
 					tagListView.getItems().add(tag);
 					
 					tagListView.refresh();
-					//tagListView.setItems(FXCollections.observableArrayList(photoList.getSelectionModel().getSelectedItem().getPhotoTags()));
 					autoSave(users);
 					tagNameField.clear();
 					tagValueField.clear();
@@ -552,12 +557,7 @@ public class PhotoDisplayController {
 	 * @param e the ActionEvent to activate confirm()
 	 */
 	public void confirm(ActionEvent e) {
-		/*if (caption.getText().trim().length()==0 || caption.getText()==null) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText("No caption entered! Please enter a caption");
-			alert.showAndWait();
-		}*/
-		//else {
+		
 	
 				Alert alert = new Alert(AlertType.CONFIRMATION, "Set " + caption.getText() + " as caption for this picture?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 	
@@ -618,11 +618,50 @@ public class PhotoDisplayController {
 		            photoView.setFitHeight(50);
 		            photoView.setFitWidth(70);
 		            photoView.setImage(image);
-		            setText(photo.getPhotoName());
+		            setText(photo.getPhotoCaption());
 		            setGraphic(photoView);
 		        }
 		    }
 		});
+		
+	}
+	
+	public void moveConfirm() {
+			Photo photoToBeMoved=photoList.getSelectionModel().getSelectedItem();
+			String newAlbum=albumField.getText();
+			for (Album alb:this.currentUser.getAlbums()) {
+				System.out.println(alb.getAlbumName());
+				if (alb.getAlbumName().equals(newAlbum)) {
+					System.out.println("Entered");
+					for (Photo photo:alb.getPhotos()) {
+						if ((photo.getPhotoName().equals(photoToBeMoved.getPhotoName())) && (photo.getPhotoSource().equals(photoToBeMoved.getPhotoSource()))) {
+							Alert palert = new Alert(AlertType.ERROR);
+							palert.setHeaderText("This photo is already present in the other album");
+							palert.showAndWait();
+							return;
+						//	return "error";
+						}
+					}
+					
+					alb.getPhotos().add(photoToBeMoved);
+					autoSave(users);
+					if (identifier.equals(movePhotoP)) {
+						this.currentAlbum.getPhotos().remove(photoToBeMoved);
+						photoList.getItems().remove(photoToBeMoved);
+				
+					}
+					albumField.setVisible(false);
+					confirmMove.setVisible(false);
+					albumField.clear();
+					autoSave(users);
+					return;
+				}
+			}
+			Alert palert = new Alert(AlertType.ERROR);
+			palert.setHeaderText("This album doesn't exist in your account");
+			palert.showAndWait();
+			albumField.clear();
+			
 		
 	}
 	/**

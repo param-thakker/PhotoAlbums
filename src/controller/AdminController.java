@@ -74,7 +74,7 @@ public class AdminController {
 	 * the list of available Users to login
 	 */
 	List<String> list=new ArrayList<>();
-//<<<<<<< Updated upstream
+
 	/**
 	 * The ObservableList to display the available Users to login
 	 */
@@ -84,8 +84,7 @@ public class AdminController {
 	 * @param mainStage the Stage to execute on
 	 * @throws IOException
 	 */
-	//public void start(Stage mainStage) throws IOException {
-//=======
+	
 	List<User> usersList=new ArrayList<>();
 	
 	//private ObservableList<String> obsList;  
@@ -93,7 +92,7 @@ public class AdminController {
 	public void start(Stage mainStage, List<User> users) throws IOException {
 		this.usersList=users;
 		userList.setItems(FXCollections.observableArrayList(users));
-//>>>>>>> Stashed changes
+
 		userField.setDisable(true);
 		confirmAdd.setDisable(true);
 		
@@ -164,7 +163,7 @@ public class AdminController {
 				}
 			}
 				
-			//}
+		
 		//	else {
 				Alert alert = new Alert(AlertType.CONFIRMATION, "Add " + newUser + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 				alert.setTitle("Add new user");
@@ -213,16 +212,6 @@ public class AdminController {
 			exception.printStackTrace();
 		}
 	}
-	/*public void displayList() {
->>>>>>> Stashed changes
-		for (String user:LoginController.users.keySet()) {
-			if (!user.equals("admin") && !list.contains(user)) {
-			list.add(user);
-			}
-		}
-		obsList = FXCollections.observableArrayList(list); 
 
-		userList.setItems(obsList); 
-	}*/
 	
 }

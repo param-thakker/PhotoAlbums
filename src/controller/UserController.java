@@ -504,8 +504,7 @@ public class UserController {
      * @param e the ActionEvent to activate confirm()
      */
     public void confirm(ActionEvent e) {
-    	//AlbumList.add(new Album(albumField.getText()));
-    	//albumStringList.add(albumField.getText());
+ 
     	if ((albumField.getText().trim().length()==0 || albumField.getText()==null) ) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setHeaderText("Album name can't be empty! Please enter legitimate values");

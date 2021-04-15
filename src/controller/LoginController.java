@@ -138,7 +138,7 @@ public class LoginController {
 					Scene scene = new Scene(root,350,400);
 					stage.setScene(scene);
 					stage.show();	
-					//System.out.println("ADMIN");
+					
 			}
 		
 			else if (user!=null) {
