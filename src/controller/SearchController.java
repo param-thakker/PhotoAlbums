@@ -37,6 +37,11 @@ import model.Photo;
 import model.Tag;
 import model.User;
 
+/**
+ * The SearchController class handles the user control and logic in the SearchDisplay screen 
+ * @author Param Thakker
+ *
+ */
 public class SearchController {
 
 	
@@ -73,6 +78,12 @@ public class SearchController {
 	List<String> tagvalue = new ArrayList<String>();
 	List<Photo> list=new ArrayList<>();
 	Set<String> dupSet=new HashSet<>();
+	/**
+	 * the main start method for SearchController
+	 * @param mainStage the Stage to execute on
+	 * @param user the current User 
+	 * @param users the list of available Users
+	 */
 	public void start(Stage mainStage, User user, List<User> users) {
 				
 		this.currentUser=user;
@@ -110,7 +121,10 @@ public class SearchController {
 		
 	}
 	
-	
+	/**
+	 * Creates an Album from the search results
+	 * @param e the ActionEvent to activate sCreateAlbum
+	 */
 	public void sCreateAlbum(ActionEvent e) {
 		Set<String> dupSet=new HashSet<>();
 		if (photoListView.getItems().size()==0 || photoListView==null) {
@@ -139,6 +153,10 @@ public class SearchController {
 			}
 		}
 	}
+	/**
+	 * confirms the tag selection criteria
+	 * @param e the ActionEvent to activate confirm
+	 */
 	public void confirm(ActionEvent e) {
 	
 			String tagType=null;
@@ -181,6 +199,10 @@ public class SearchController {
 			
 		
 	}
+	/**
+	 * Goes back to the AlbumDisplay screen 
+	 * @throws IOException IOException
+	 */
 	public void backToAlbum() throws IOException {
 		Stage stage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
@@ -193,6 +215,9 @@ public class SearchController {
 		stage.show();	
 		
 	}
+	/**
+	 * confirms the deletion of a tag to search by
+	 */
 	public void confirmDel() {
 		if (tagListView.getSelectionModel().getSelectedItem() != null) {
     		
@@ -212,6 +237,10 @@ public class SearchController {
 			alert.showAndWait();
 		}
 	}
+	/**
+	 * searches all available Albums under this User and adds the respective Photos that fall into the search criteria to the ListView
+	 * @throws ParseException ParseException
+	 */
 	public void searchP() throws ParseException {
 		Set<String> dupSet=new HashSet<>();
 		list.clear();
@@ -277,6 +306,9 @@ public class SearchController {
 		}
 		displayList();
 	}
+	/**
+	 * displays the searched Photos in the ListView
+	 */
 	public void displayList() {
 		photoListView.getItems().clear();
 		ObservableList<Photo> obsList= FXCollections.observableArrayList(this.list); 
@@ -301,7 +333,11 @@ public class SearchController {
 	    }
 	});
 	}
-	public static void autoSave(List<User> users) {
+	/**
+	 * Auto saves the data for future opening
+	 * @param users the list of authorized Users
+	 */
+	private static void autoSave(List<User> users) {
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream("data/data.dat");
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -313,6 +349,9 @@ public class SearchController {
 			exception.printStackTrace();
 		}
 	}
+	/**
+	 * clears the searched date ranges
+	 */
 	public void clear() {
 		from.setValue(null);
 		to.setValue(null);

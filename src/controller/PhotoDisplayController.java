@@ -316,7 +316,7 @@ public class PhotoDisplayController {
 			photoDate.setTimeInMillis(chosenPicture.lastModified());
 			
 			//photoDate.set(Calendar.MILLISECOND,0);
-			Photo photoToBeAdded = new Photo(name,"", photoDate, chosenPicture.toURI().toString());
+			Photo photoToBeAdded = new Photo(name, "", photoDate, chosenPicture.toURI().toString());
 			
 			for (Photo currentPhoto : currentAlbum.getPhotos()) {
 				if ( (currentPhoto.getPhotoName().equals(photoToBeAdded.getPhotoName())) && (currentPhoto.getPhotoSource().equals(photoToBeAdded.getPhotoSource()))) {

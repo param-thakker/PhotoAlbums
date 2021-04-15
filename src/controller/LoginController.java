@@ -205,7 +205,7 @@ public class LoginController {
 		String photoName = photoFile.getName();
 		Calendar photoDate = Calendar.getInstance();
 		photoDate.setTimeInMillis(photoFile.lastModified());
-		Photo newStockPhoto = new Photo(photoName, "", photoDate,photoFile.toURI().toString());
+		Photo newStockPhoto = new Photo(photoName, "", photoDate, photoFile.toURI().toString());
 		stockAlbum.getPhotos().add(newStockPhoto);
 	}
 		
